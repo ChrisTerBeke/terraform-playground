@@ -2,6 +2,6 @@ resource "google_compute_network" "gcp_get_started_vpc_network" {
   name = "gcp-get-started-network"
 
   depends_on = [
-    google_project_service.gcp_get_started_project_service,
+    google_project_service.gcp_get_started_project_service_compute,
   ]
 }
