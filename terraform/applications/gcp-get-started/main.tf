@@ -16,4 +16,13 @@ provider "google" {
 
 resource "google_compute_network" "gcp_get_started_vpc_network" {
   name = "gcp-get-started-network"
+
+  depends_on = [
+    google_project_service.gcp_get_started_project_service,
+  ]
+}
+
+resource "google_project_service" "gcp_get_started_project_service" {
+  service            = "compute.googleapis.com"
+  disable_on_destroy = false
 }
