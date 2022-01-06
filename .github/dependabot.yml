@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: terraform
+    directory: terraform/applications/gcp-get-started
+    schedule:
+      interval: daily
