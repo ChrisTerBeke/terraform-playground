@@ -23,6 +23,10 @@ resource "google_compute_instance" "gcp_get_started_debian_vm" {
   machine_type = "f1-micro"
   tags         = ["gcp-get-started-allow-ssh"]
 
+  metadata = {
+    ssh-keys = "chris:${file("./ssh/google_compute_engine.pub")}"
+  }
+
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-9"
