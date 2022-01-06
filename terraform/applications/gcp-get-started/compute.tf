@@ -24,7 +24,7 @@ resource "google_compute_instance" "gcp_get_started_debian_vm" {
   tags         = ["gcp-get-started-allow-ssh"]
 
   metadata = {
-    ssh-keys = "chris:${file("./ssh/google_compute_engine.pub")}"
+    ssh-keys = format("root:%s", chomp(tls_private_key.gcp_get_started_ssh_private_key.public_key_openssh))
   }
 
   boot_disk {
@@ -44,5 +44,6 @@ resource "google_compute_instance" "gcp_get_started_debian_vm" {
   depends_on = [
     google_compute_network.gcp_get_started_vpc_network,
     google_compute_address.gcp_get_started_debian_static_ip,
+    tls_private_key.gcp_get_started_ssh_private_key,
   ]
 }
