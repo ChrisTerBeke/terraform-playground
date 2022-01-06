@@ -7,15 +7,6 @@ output "gcp_get_started_debian_vm_public_ip" {
   ]
 }
 
-output "gcp_get_started_debian_vm_ssh_public_key" {
-  description = "The SSH public key to connect to the Debian VM."
-  value       = tls_private_key.gcp_get_started_ssh_private_key.public_key_openssh
-
-  depends_on = [
-    tls_private_key.gcp_get_started_ssh_private_key,
-  ]
-}
-
 output "gcp_get_started_debian_vm_ssh_private_key" {
   description = "The SSH private key to connect to the Debian VM."
   value       = tls_private_key.gcp_get_started_ssh_private_key.private_key_pem
