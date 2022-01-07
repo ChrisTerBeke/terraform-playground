@@ -38,6 +38,8 @@ resource "google_project_service" "compute" {
 }
 ```
 
+> Be sure to run `gcloud auth application-default login` so we don't need set up GCP access manually.
+
 ## SSH
 
 Since we want to SSH into our VM that we'll create later, we need to generate an RSA keypair.
@@ -61,12 +63,24 @@ resource "tls_private_key" "ssh" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
+
+resource "local_file" "ssh_private_key_pem" {
+  content         = tls_private_key.ssh.private_key_pem
+  filename        = ".ssh/google_compute_engine"
+  file_permission = "0600"
+
+  depends_on = [
+    tls_private_key.ssh,
+  ]
+}
 ```
+
+As you can see, we write the private key to local file so we can actually use it later.
 
 ## VPC Network
 
 When creating a new Google Cloud Project, a default VPC network is created.
-This network works fine, but since it's typically recommended to create separate networks for isolation, let's do that.
+This network works fine, but since it's typically recommended to create separate networks for isolation, let's do that:
 
 ```terraform
 resource "google_compute_network" "vpc_network" {
@@ -80,7 +94,7 @@ Now let's create our VM and associated resources.
 Technically we don't need a static IP address, but it makes connecting to the VM more predictable in case you want to leave it running for a longer time.
 
 ```terraform
-resource "google_compute_address" "debian_vm_ip" {
+resource "google_compute_address" "static_ip" {
   name = "debian-vm"
 }
 
@@ -100,13 +114,15 @@ resource "google_compute_firewall" "allow_ssh" {
   ]
 }
 
+data "google_client_openid_userinfo" "me" {}
+
 resource "google_compute_instance" "debian_vm" {
   name         = "debian"
   machine_type = "f1-micro"
   tags         = ["allow-ssh"] // this receives the firewall rule
 
   metadata = {
-    ssh-keys = format("<gcp-username>:%s", tls_private_key.ssh.public_key_openssh)
+    ssh-keys = "${split("@", data.google_client_openid_userinfo.me.email)[0]}:${tls_private_key.ssh.public_key_openssh}"
   }
 
   boot_disk {
@@ -119,14 +135,15 @@ resource "google_compute_instance" "debian_vm" {
     network = google_compute_network.vpc_network.name
 
     access_config {
-      nat_ip = google_compute_address.debian_vm_ip.address
+      nat_ip = google_compute_address.static_ip.address
     }
   }
 
   depends_on = [
     google_compute_network.vpc_network,
-    google_compute_address.debian_vm_ip,
+    google_compute_address.static_ip,
     tls_private_key.ssh,
+    google_project_service.compute,
   ]
 }
 ```
@@ -145,12 +162,27 @@ output "public_ip" {
     google_compute_address.debian_vm_ip,
   ]
 }
+```
 
-output "ssh_private_key" {
+And now we can use SSH to connect to the VM:
+
+```bash
+ssh -i ./.ssh/google_compute_engine <gcp-username>@<static-ip>
+<gcp-username>@debian:~$
+```
+
+Enjoy your Debian environment!
+
+## Bonus: using a remote runner
+
+When using remote runner, for instance Terraform Cloud, we cannot output the private key to a local file.
+We can still obtain the private key however by using an extra output, even if it's sensitive:
+
+```terraform
+output "gcp_get_started_debian_vm_ssh_private_key" {
   description = "The SSH private key to connect to the Debian VM."
   value       = tls_private_key.ssh.private_key_pem
-
-  sensitive = true
+  sensitive   = true
 
   depends_on = [
     tls_private_key.ssh,
@@ -158,17 +190,8 @@ output "ssh_private_key" {
 }
 ```
 
-While our private key is sensitive information, we can still obtain it using `terraform output -json` in order to connect to the machine over SSH:
+Now use the following command to dump the private key into a local file:
 
 ```bash
 terraform output -json | jq -r ".ssh_private_key.value" > ~/.ssh/google_compute_engine
 ```
-
-And now we can use SSH to connect to the VM:
-
-```bash
-ssh -i ~/.ssh/google_compute_engine <gcp-username@<vm-static-ip>
-<gcp-username@debian:~$
-```
-
-Enjoy your Debian environment!

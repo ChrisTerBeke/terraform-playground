@@ -1,11 +1,11 @@
-resource "google_compute_address" "gcp_get_started_debian_static_ip" {
-  name = "gcp-get-started-debian-static-ip"
+resource "google_compute_address" "static_ip" {
+  name = "debian-vm"
 }
 
-resource "google_compute_firewall" "gcp_get_started_allow_ssh" {
-  name          = "gcp-get-started-allow-ssh"
-  network       = google_compute_network.gcp_get_started_vpc_network.name
-  target_tags   = ["gcp-get-started-allow-ssh"]
+resource "google_compute_firewall" "allow_ssh" {
+  name          = "allow-ssh"
+  network       = google_compute_network.vpc_network.name
+  target_tags   = ["allow-ssh"]
   source_ranges = ["0.0.0.0/0"]
 
   allow {
@@ -14,17 +14,19 @@ resource "google_compute_firewall" "gcp_get_started_allow_ssh" {
   }
 
   depends_on = [
-    google_compute_network.gcp_get_started_vpc_network,
+    google_compute_network.vpc_network,
   ]
 }
 
-resource "google_compute_instance" "gcp_get_started_debian_vm" {
-  name         = "gcp-get-started-debian"
+data "google_client_openid_userinfo" "me" {}
+
+resource "google_compute_instance" "debian_vm" {
+  name         = "debian"
   machine_type = "f1-micro"
-  tags         = ["gcp-get-started-allow-ssh"]
+  tags         = ["allow-ssh"]
 
   metadata = {
-    ssh-keys = format("christerbeke:%s", tls_private_key.gcp_get_started_ssh_private_key.public_key_openssh)
+    ssh-keys = "${split("@", data.google_client_openid_userinfo.me.email)[0]}:${tls_private_key.ssh.public_key_openssh}"
   }
 
   boot_disk {
@@ -34,16 +36,17 @@ resource "google_compute_instance" "gcp_get_started_debian_vm" {
   }
 
   network_interface {
-    network = google_compute_network.gcp_get_started_vpc_network.name
+    network = google_compute_network.vpc_network.name
 
     access_config {
-      nat_ip = google_compute_address.gcp_get_started_debian_static_ip.address
+      nat_ip = google_compute_address.static_ip.address
     }
   }
 
   depends_on = [
-    google_compute_network.gcp_get_started_vpc_network,
-    google_compute_address.gcp_get_started_debian_static_ip,
-    tls_private_key.gcp_get_started_ssh_private_key,
+    google_compute_network.vpc_network,
+    google_compute_address.static_ip,
+    tls_private_key.ssh,
+    google_project_service.compute,
   ]
 }

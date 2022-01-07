@@ -12,10 +12,9 @@ terraform {
 }
 
 provider "google" {
-  credentials = base64decode(var.gcp_service_account_key)
-  project     = "playground-christerbeke"
-  region      = "europe-west4"
-  zone        = "europe-west4-a"
+  project = "playground-christerbeke"
+  region  = "europe-west4"
+  zone    = "europe-west4-a"
 }
 
 provider "tls" {
