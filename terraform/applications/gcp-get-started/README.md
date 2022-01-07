@@ -179,10 +179,9 @@ When using remote runner, for instance Terraform Cloud, we cannot output the pri
 We can still obtain the private key however by using an extra output, even if it's sensitive:
 
 ```terraform
-output "gcp_get_started_debian_vm_ssh_private_key" {
-  description = "The SSH private key to connect to the Debian VM."
-  value       = tls_private_key.ssh.private_key_pem
-  sensitive   = true
+output "ssh_private_key" {
+  value     = tls_private_key.ssh.private_key_pem
+  sensitive = true
 
   depends_on = [
     tls_private_key.ssh,
@@ -193,5 +192,5 @@ output "gcp_get_started_debian_vm_ssh_private_key" {
 Now use the following command to dump the private key into a local file:
 
 ```bash
-terraform output -json | jq -r ".ssh_private_key.value" > ~/.ssh/google_compute_engine
+terraform output -json | jq -r ".ssh_private_key.value" > .ssh/google_compute_engine
 ```
