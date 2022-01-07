@@ -1,15 +1,10 @@
-# GCP + Terraform: Getting started
+In this post I will cover the needed Terraform config to SSH into a VM instance on GCP.
 
-Sometimes you just need a small Debian machine to perform some Linux tasks.
-While using a tool like Google Cloud Shell satisfies that requirement perfectly fine,
-it's much more fun to write some Terraform code and learn something along the way!
-In this blog post I will cover the needed Terraform solution to spin up a Debian VM and obtain SSH access to it.
-
-## Google Cloud Platform
+## Set up GCP
 
 Our solution will use several GCP APIs that need to be enabled:
 
-```terraform
+```hcl
 terraform {
   required_providers {
     google = {
@@ -40,12 +35,12 @@ resource "google_project_service" "compute" {
 
 > Be sure to run `gcloud auth application-default login` so we don't need set up GCP access manually.
 
-## SSH
+## Generate an SSH key pair
 
 Since we want to SSH into our VM that we'll create later, we need to generate an RSA keypair.
-The [`hashicorp/tls` provider](https://registry.terraform.io/providers/hashicorp/tls/latest) can be used to automate this:
+We can use the [`hashicorp/tls` provider](https://registry.terraform.io/providers/hashicorp/tls/latest) to automate this:
 
-```terraform
+```hcl
 terraform {
   required_providers {
     tls = {
@@ -75,25 +70,24 @@ resource "local_file" "ssh_private_key_pem" {
 }
 ```
 
-As you can see, we write the private key to local file so we can actually use it later.
+We write the private key to local file so we can actually use it later.
 
-## VPC Network
+## Create a VPC network
 
 When creating a new Google Cloud Project, a default VPC network is created.
-This network works fine, but since it's typically recommended to create separate networks for isolation, let's do that:
+This network works fine, but since it's recommended to create separate networks for isolation, let's do that:
 
-```terraform
+```hcl
 resource "google_compute_network" "vpc_network" {
   name = "my-network"
 }
 ```
 
-## Compute
+## Create a compute instance
 
 Now let's create our VM and associated resources.
-Technically we don't need a static IP address, but it makes connecting to the VM more predictable in case you want to leave it running for a longer time.
 
-```terraform
+```hcl
 resource "google_compute_address" "static_ip" {
   name = "debian-vm"
 }
@@ -148,12 +142,12 @@ resource "google_compute_instance" "debian_vm" {
 }
 ```
 
-## Connecting
+## Connect to the VM using SSH
 
 Now that all of our resources are created, how do we use SSH to connect to the VM?
 Let's define an output to get the information we need to do that:
 
-```terraform
+```hcl
 output "public_ip" {
   value = google_compute_address.static_ip.address
 
@@ -177,12 +171,12 @@ ssh -i .ssh/google_compute_engine <gcp-username>@<static-ip>
 
 Enjoy your Debian environment!
 
-## Bonus: using a remote runner
+## Bonus: use a remote runner
 
-When using remote runner, for instance Terraform Cloud, we cannot output the private key to a local file.
-We can still obtain the private key however by using an extra output, even if it's sensitive:
+When you use a remote runner like [Terraform Cloud](https://www.terraform.io/cloud), you cannot output the private key to a local file.
+We can still obtain the private key by using an extra output even if it's sensitive:
 
-```terraform
+```hcl
 output "ssh_private_key" {
   value     = tls_private_key.ssh.private_key_pem
   sensitive = true
