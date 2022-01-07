@@ -151,24 +151,28 @@ resource "google_compute_instance" "debian_vm" {
 ## Connecting
 
 Now that all of our resources are created, how do we use SSH to connect to the VM?
-Let's define some outputs to get the information we need to do just that.
+Let's define an output to get the information we need to do that:
 
 ```terraform
 output "public_ip" {
-  description = "The public IP address to connect to the Debian VM."
-  value       = google_compute_address.debian_vm_ip.address
+  value = google_compute_address.static_ip.address
 
   depends_on = [
-    google_compute_address.debian_vm_ip,
+    google_compute_address.static_ip,
   ]
 }
+```
+
+Print the value for the static IP:
+
+```bash
+terraform output public_ip
 ```
 
 And now we can use SSH to connect to the VM:
 
 ```bash
-ssh -i ./.ssh/google_compute_engine <gcp-username>@<static-ip>
-<gcp-username>@debian:~$
+ssh -i .ssh/google_compute_engine <gcp-username>@<static-ip>
 ```
 
 Enjoy your Debian environment!

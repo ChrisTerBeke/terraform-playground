@@ -1,6 +1,5 @@
-output "gcp_get_started_debian_vm_public_ip" {
-  description = "The public IP address to connect to the Debian VM."
-  value       = google_compute_address.static_ip.address
+output "public_ip" {
+  value = google_compute_address.static_ip.address
 
   depends_on = [
     google_compute_address.static_ip,
