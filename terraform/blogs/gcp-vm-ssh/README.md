@@ -1,3 +1,8 @@
+# How to create a VM with SSH enabled on GCP
+
+Sometimes you need a quick Linux environment to try something out.
+While a tool like Google Cloud Shell works perfectly fine for this purpose,
+it's much more fun to dive into some Terraform code and learn something along the way!
 In this post I will cover the needed Terraform config to SSH into a VM instance on GCP.
 
 ## Set up GCP
@@ -71,6 +76,8 @@ resource "local_file" "ssh_private_key_pem" {
 ```
 
 We write the private key to local file so we can actually use it later.
+
+> Note: the private key will be part of the state, so don't use this method if you use a shared remote state!
 
 ## Create a VPC network
 
@@ -192,3 +199,12 @@ Now use the following command to dump the private key into a local file:
 ```bash
 terraform output -json | jq -r ".ssh_private_key.value" > .ssh/google_compute_engine
 ```
+
+## Next steps
+
+This blog uses SSH because almost everyone is familiar with it.
+But there are other, more secure ways, to connect to a VM on GCP.
+For example, [tunneling using IAP](https://cloud.google.com/iap/docs/using-tcp-forwarding#starting_ssh).
+You can also read [our post about setting this up in Ansible](https://binx.io/blog/2021/03/10/how-to-tell-ansible-to-use-gcp-iap-tunneling/).
+Furthermore, to reduce lingering public keys, Google recommends enabling [OS Login](https://cloud.google.com/compute/docs/instances/managing-instance-access).
+
