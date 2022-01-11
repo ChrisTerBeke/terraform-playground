@@ -4,4 +4,5 @@ This repository contains Terraform code for tests, blog posts and just playing a
 
 ## Blogs
 
-* [How to create a VM with SSH enabled on GCP](./terraform/blogs/gcp-vm-ssh/README.md)
+* [How to create a VM with SSH enabled on GCP](./terraform/blogs/gcp-vm-ssh/README.md) - [Binx.io](https://binx.io/blog/2022/01/07/how-to-create-a-vm-with-ssh-enabled-on-gcp/)
+* [A minimal setup for a high-availability service using Google Cloud Run](./terraform/blogs/gcp-cloud-run-ha/README.md) - [Binx.io]()

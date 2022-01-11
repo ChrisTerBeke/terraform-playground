@@ -207,5 +207,3 @@ But there are other, more secure ways, to connect to a VM on GCP.
 For example, [tunneling using IAP](https://cloud.google.com/iap/docs/using-tcp-forwarding#starting_ssh).
 You can also read [our post about setting this up in Ansible](https://binx.io/blog/2021/03/10/how-to-tell-ansible-to-use-gcp-iap-tunneling/).
 Furthermore, to reduce lingering public keys, Google recommends enabling [OS Login](https://cloud.google.com/compute/docs/instances/managing-instance-access).
-
-> The final blog post is available at the [Binx.io website](https://binx.io/blog/2022/01/07/how-to-create-a-vm-with-ssh-enabled-on-gcp/).
