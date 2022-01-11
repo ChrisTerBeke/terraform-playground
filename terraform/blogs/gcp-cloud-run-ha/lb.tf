@@ -15,8 +15,9 @@ resource "google_compute_region_network_endpoint_group" "neg" {
 }
 
 resource "google_compute_backend_service" "backend" {
-  name     = "backend"
-  protocol = "HTTP"
+  name       = "backend"
+  protocol   = "HTTP"
+  enable_cdn = true
 
   dynamic "backend" {
     for_each = toset(local.locations)
