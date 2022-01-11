@@ -4,4 +4,4 @@ This repository contains Terraform code for tests, blog posts and just playing a
 
 ## Applications
 
-* [GCP + Terraform: Getting started](./terraform/applications/gcp-get-started/README.md)
+* [GCP + Terraform: Getting started](./terraform/blogs/gcp-vm-ssh/README.md)
