@@ -120,6 +120,12 @@ output "static_ip" {
 
 Now run `terraform apply` to deploy everything and validate that it returns the "Hello World" container (for example using `curl $(terraform output --raw static_ip)`).
 
+The Google Cloud Console also gives a nice visual overview of how the requests are routed:
+
+![balanced.png](./balanced.png)
+
+Now you know how to deploy Google Cloud Run services in multiple regions. Give it a try with [PrivateBin](https://binx.io/blog/2021/09/12/how-to-deploy-privatebin-on-google-cloud-run-and-google-cloud-storage/)!
+
 ## Bonus: enable Cloud CDN for even faster loading times
 
 To prevent static assets from being served from your container, you can enable Cloud CDN to automatically serve these from Cloud Storage edge locations instead of the container itself.
