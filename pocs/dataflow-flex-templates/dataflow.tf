@@ -67,13 +67,23 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
 
   build {
     step {
+      id   = "Build docker image"
+      name = "gcr.io/kaniko-project/executor:latest"
+      dir  = "pocs/dataflow-flex-templates/template"
+      args = [
+        "--destination=eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
+        "--cache=true",
+      ]
+    }
+
+    step {
       id   = "Store template"
       name = "gcr.io/cloud-builders/gcloud"
       dir  = "pocs/dataflow-flex-templates/template"
       args = [
         "dataflow", "flex-template", "build",
         "gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}",
-        "--image-gcr-path", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
+        "--image", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
         "--sdk-language", "PYTHON",
         "--metadata-file", "metadata.json",
       ]
