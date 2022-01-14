@@ -14,6 +14,12 @@
             "helpText": "Name of the BigQuery output table name.",
             "isOptional": true,
             "regexes": ["[^:]+:[^.]+[.].+"]
+        },
+        {
+            "name": "metadata_file_md5",
+            "label": "MD5 hash of the metadata.jsonfile.",
+            "helpText": "Only used to detect infrastructure changes.",
+            "isOptional": true
         }
     ]
 }

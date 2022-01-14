@@ -42,9 +42,11 @@ resource "google_storage_bucket_object" "dataflow_metadata" {
   bucket  = google_storage_bucket.storage_bucket.name
   content = "{}"
 
+  // will be dynamically updated by Cloud Build job
   lifecycle {
     ignore_changes = [
-      content, // will be dynamically updated by Cloud Build job
+      content,
+      detect_md5hash,
     ]
   }
 }
