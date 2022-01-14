@@ -49,7 +49,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
     }
   }
 
-  included_files = ["pocs/dataflow-flex-templates/template/**"]
+  included_files = ["pocs/dataflow-flex-templates/**/*"]
 
   build {
     step {
