@@ -9,18 +9,6 @@ import apache_beam.transforms.window as window
 from apache_beam.options.pipeline_options import PipelineOptions
 
 
-# Defines the BigQuery schema for the output table.
-SCHEMA = ",".join(
-    [
-        "url:STRING",
-        "num_reviews:INTEGER",
-        "score:FLOAT64",
-        "first_date:TIMESTAMP",
-        "last_date:TIMESTAMP",
-    ]
-)
-
-
 def parse_json_message(message: str) -> Dict[str, Any]:
     """
     Parse incoming JSON message and return structured data.
@@ -58,7 +46,7 @@ def run(input_subscription: str, output_table: str, beam_args: List[str] = None)
             })
         )
 
-        _ = messages | "Write to BigQuery" >> beam.io.WriteToBigQuery(output_table, schema=SCHEMA)
+        _ = messages | "Write to BigQuery" >> beam.io.WriteToBigQuery(output_table)
 
 
 if __name__ == "__main__":
