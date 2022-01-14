@@ -37,6 +37,19 @@ resource "google_storage_bucket" "storage_bucket" {
   location = "EU"
 }
 
+resource "google_storage_bucket_object" "dataflow_metadata" {
+  name    = "templates/streaming-beam/metadata.json"
+  bucket  = google_storage_bucket.storage_bucket.name
+  content = "{}"
+
+  lifecycle {
+    ignore_changes = [
+      content, // will be dynamically updated by Cloud Build job
+    ]
+  }
+}
+
+// TODO: speed up builds by using better caching (:latest image or Kaniko?)
 resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
   name           = "dataflow-build"
   included_files = ["pocs/dataflow-flex-templates/**"]
@@ -70,7 +83,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       name = "gcr.io/cloud-builders/gcloud"
       args = [
         "dataflow", "flex-template", "build",
-        "gs://${google_storage_bucket.storage_bucket.name}/templates/streaming-beam/metadata.json",
+        "gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}",
         "--image", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
         "--sdk-language", "PYTHON",
         "--metadata-file", "metadata.json",
@@ -80,15 +93,15 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
   }
 }
 
-// TODO: auto-detect deployment needed for job when metadata.json changed (use MD5 hash as label?)
 resource "google_dataflow_flex_template_job" "dataflow_job" {
   provider                = google-beta
   name                    = "dataflow-flex-job"
-  container_spec_gcs_path = "gs://${google_storage_bucket.storage_bucket.name}/templates/streaming-beam/metadata.json"
+  container_spec_gcs_path = "gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}"
 
   parameters = {
     input_subscription = google_pubsub_subscription.pubsub_subscription.id
     output_table       = "playground-christerbeke:${google_bigquery_dataset.bigquery_dataset.dataset_id}.${google_bigquery_table.bigquery_table.table_id}"
     subnetwork         = "regions/${google_compute_subnetwork.vpc_subnetwork.region}/subnetworks/${google_compute_subnetwork.vpc_subnetwork.name}"
+    metadata_file_md5  = google_storage_bucket_object.dataflow_metadata.md5hash
   }
 }
