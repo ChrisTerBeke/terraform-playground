@@ -78,7 +78,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
     step {
       id   = "Store template"
       name = "gcr.io/cloud-builders/gcloud"
-      dir  = "pocs/dataflow-flex-templates/template"
+      dir  = "pocs/dataflow-flex-templates"
       args = [
         "dataflow", "flex-template", "build",
         "gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}",
