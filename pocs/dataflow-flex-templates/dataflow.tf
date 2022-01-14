@@ -1,5 +1,3 @@
-// TODO: add a google cloud build job that builds and stores the Docker image in Container Registry and the Dataflow flex template in Cloud Storage
-
 resource "google_compute_network" "vpc_network" {
   name = "dataflow-network"
 }
@@ -37,6 +35,47 @@ resource "google_bigquery_table" "bigquery_table" {
 resource "google_storage_bucket" "storage_bucket" {
   name     = "christerbeke-dataflow-storage"
   location = "EU"
+}
+
+resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
+  name = "dataflow-build"
+
+  github {
+    owner = "ChrisTerBeke"
+    name  = "terraform-playground"
+
+    push {
+      branch = "main"
+    }
+  }
+
+  included_files = ["pocs/dataflow-flex-templates/template/**"]
+
+  build {
+    step {
+      id   = "Build docker image"
+      name = "gcr.io/cloud-builders/docker"
+      args = ["build", "-t", "eu.gcr.io/playground-christerbeke/dataflow/streaming-beam:latest", "."]
+    }
+
+    step {
+      id   = "Push docker image"
+      name = "gcr.io/cloud-builders/docker"
+      args = ["push", "eu.gcr.io/playground-christerbeke/dataflow/streaming-beam:latest"]
+    }
+
+    step {
+      id   = "Store template"
+      name = "gcr.io/cloud-builders/gcloud"
+      args = [
+        "dataflow", "flex-template", "build",
+        "gs://${google_storage_bucket.storage_bucket.name}/templates/streaming-beam/metadata.json",
+        "--image", "eu.gcr.io/playground-christerbeke/dataflow/streaming-beam:latest",
+        "--sdk-language", "PYTHON",
+        "--metadata-file", "metadata.json",
+      ]
+    }
+  }
 }
 
 resource "google_dataflow_flex_template_job" "dataflow_job" {
