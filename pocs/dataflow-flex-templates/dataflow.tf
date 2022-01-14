@@ -54,14 +54,14 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
     step {
       id   = "Build docker image"
       name = "gcr.io/cloud-builders/docker"
-      args = ["build", "-t", "eu.gcr.io/playground-christerbeke/dataflow/streaming-beam:latest", "."]
+      args = ["build", "-t", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA", "."]
       dir  = "pocs/dataflow-flex-templates/template"
     }
 
     step {
       id   = "Push docker image"
       name = "gcr.io/cloud-builders/docker"
-      args = ["push", "eu.gcr.io/playground-christerbeke/dataflow/streaming-beam:latest"]
+      args = ["push", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA"]
       dir  = "pocs/dataflow-flex-templates/template"
     }
 
@@ -71,7 +71,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       args = [
         "dataflow", "flex-template", "build",
         "gs://${google_storage_bucket.storage_bucket.name}/templates/streaming-beam/metadata.json",
-        "--image", "eu.gcr.io/playground-christerbeke/dataflow/streaming-beam:latest",
+        "--image", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
         "--sdk-language", "PYTHON",
         "--metadata-file", "metadata.json",
       ]
