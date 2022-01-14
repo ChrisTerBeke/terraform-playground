@@ -51,7 +51,6 @@ resource "google_storage_bucket_object" "dataflow_metadata" {
   }
 }
 
-// TODO: speed up builds by using better caching (:latest image or Kaniko?)
 resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
   name           = "dataflow-build"
   included_files = ["pocs/dataflow-flex-templates/template/**"]
