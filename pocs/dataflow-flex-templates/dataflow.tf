@@ -80,13 +80,6 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
     }
 
     step {
-      id   = "Push docker image"
-      name = "gcr.io/cloud-builders/docker"
-      args = ["push", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam", "--all-tags"]
-      dir  = "pocs/dataflow-flex-templates/template"
-    }
-
-    step {
       id   = "Store template"
       name = "gcr.io/cloud-builders/gcloud"
       args = [
@@ -98,6 +91,11 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       ]
       dir  = "pocs/dataflow-flex-templates/template"
     }
+
+    images = [
+      "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
+      "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:latest",
+    ]
   }
 }
 
