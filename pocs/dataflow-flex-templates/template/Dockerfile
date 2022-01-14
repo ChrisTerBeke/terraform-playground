@@ -3,7 +3,7 @@ FROM gcr.io/dataflow-templates-base/python3-template-launcher-base
 ENV FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE="/template/requirements.txt"
 ENV FLEX_TEMPLATE_PYTHON_PY_FILE="/template/streaming_beam.py"
 
-COPY . /template
+COPY requirements.txt /template/
 
 RUN apt-get update \
     && apt-get install -y libffi-dev git \
@@ -13,3 +13,5 @@ RUN apt-get update \
     && pip download --no-cache-dir --dest /tmp/dataflow-requirements-cache -r $FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE
 
 ENV PIP_NO_DEPS=True
+
+COPY streaming_beam.py /template/
