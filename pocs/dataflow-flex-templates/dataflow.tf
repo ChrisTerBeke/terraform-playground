@@ -45,7 +45,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
     name  = "terraform-playground"
 
     push {
-      branch = "main"
+      branch = "^main$"
     }
   }
 
@@ -78,6 +78,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
   }
 }
 
+// TODO: auto-detect deployment needed for job when metadata.json changed (use MD5 hash as label?)
 resource "google_dataflow_flex_template_job" "dataflow_job" {
   provider                = google-beta
   name                    = "dataflow-flex-job"
