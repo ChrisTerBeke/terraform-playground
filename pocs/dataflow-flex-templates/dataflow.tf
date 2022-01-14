@@ -68,20 +68,18 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
   build {
     step {
       id   = "Build docker image"
-      name = "gcr.io/cloud-builders/docker"
-      args = [
-        "build",
-        "-t", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
-        "-t", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:latest",
-        "--cache-from", "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:latest",
-        "."
-      ]
+      name = "gcr.io/kaniko-project/executor:latest"
       dir  = "pocs/dataflow-flex-templates/template"
+      args = [
+        "--destination=eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
+        "--cache=true",
+      ]
     }
 
     step {
       id   = "Store template"
       name = "gcr.io/cloud-builders/gcloud"
+      dir  = "pocs/dataflow-flex-templates/template"
       args = [
         "dataflow", "flex-template", "build",
         "gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}",
@@ -89,13 +87,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
         "--sdk-language", "PYTHON",
         "--metadata-file", "metadata.json",
       ]
-      dir  = "pocs/dataflow-flex-templates/template"
     }
-
-    images = [
-      "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
-      "eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:latest",
-    ]
   }
 }
 
