@@ -103,17 +103,17 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       ]
     }
 
-    step {
-      id   = "Deploy Dataflow"
-      name = "gcr.io/cloud-builders/gcloud"
-      dir  = "pocs/dataflow-flex-templates"
-      args = [
-        "dataflow", "flex-template", "run", google_dataflow_flex_template_job.dataflow_job.name,
-        "--template-file-gcs-location=gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}",
-        "--parameters=input_subscription=${google_pubsub_subscription.pubsub_subscription.id},output_table=playground-christerbeke:${google_bigquery_dataset.bigquery_dataset.dataset_id}.${google_bigquery_table.bigquery_table.table_id}",
-        "--subnetwork=regions/${google_compute_subnetwork.vpc_subnetwork.region}/subnetworks/${google_compute_subnetwork.vpc_subnetwork.name}",
-        "--region=europe-west4",
-      ]
-    }
+    # step {
+    #   id   = "Deploy Dataflow"
+    #   name = "gcr.io/cloud-builders/gcloud"
+    #   dir  = "pocs/dataflow-flex-templates"
+    #   args = [
+    #     "dataflow", "flex-template", "run", google_dataflow_flex_template_job.dataflow_job.name,
+    #     "--template-file-gcs-location=gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}",
+    #     "--parameters=input_subscription=${google_pubsub_subscription.pubsub_subscription.id},output_table=playground-christerbeke:${google_bigquery_dataset.bigquery_dataset.dataset_id}.${google_bigquery_table.bigquery_table.table_id}",
+    #     "--subnetwork=regions/${google_compute_subnetwork.vpc_subnetwork.region}/subnetworks/${google_compute_subnetwork.vpc_subnetwork.name}",
+    #     "--region=europe-west4",
+    #   ]
+    # }
   }
 }
