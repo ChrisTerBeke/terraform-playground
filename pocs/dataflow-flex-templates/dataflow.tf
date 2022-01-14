@@ -55,12 +55,14 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       id   = "Build docker image"
       name = "gcr.io/cloud-builders/docker"
       args = ["build", "-t", "eu.gcr.io/playground-christerbeke/dataflow/streaming-beam:latest", "."]
+      dir  = "pocs/dataflow-flex-templates/template"
     }
 
     step {
       id   = "Push docker image"
       name = "gcr.io/cloud-builders/docker"
       args = ["push", "eu.gcr.io/playground-christerbeke/dataflow/streaming-beam:latest"]
+      dir  = "pocs/dataflow-flex-templates/template"
     }
 
     step {
@@ -73,6 +75,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
         "--sdk-language", "PYTHON",
         "--metadata-file", "metadata.json",
       ]
+      dir  = "pocs/dataflow-flex-templates/template"
     }
   }
 }
