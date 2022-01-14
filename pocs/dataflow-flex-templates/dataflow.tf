@@ -68,10 +68,10 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
     step {
       id   = "Build docker image"
       name = "gcr.io/kaniko-project/executor:latest"
-      dir  = "pocs/dataflow-flex-templates/template"
       args = [
         "--destination=eu.gcr.io/$PROJECT_ID/dataflow/streaming-beam:$COMMIT_SHA",
         "--cache=true",
+        "--context=dir://pocs/dataflow-flex-templates/template",
       ]
     }
 
