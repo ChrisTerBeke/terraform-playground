@@ -39,7 +39,7 @@ resource "google_storage_bucket" "storage_bucket" {
 
 resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
   name           = "dataflow-build"
-  included_files = ["pocs/-flex-templates/**"]
+  included_files = ["pocs/dataflow-flex-templates/**"]
 
   github {
     owner = "ChrisTerBeke"
