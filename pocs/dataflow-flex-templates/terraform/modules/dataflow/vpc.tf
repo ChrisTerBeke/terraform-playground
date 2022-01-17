@@ -1,5 +1,7 @@
 resource "google_compute_network" "vpc_network" {
-  name = local.vpc_network_name
+  name                            = local.vpc_network_name
+  auto_create_subnetworks         = false
+  delete_default_routes_on_create = true
 }
 
 resource "google_compute_subnetwork" "vpc_subnetwork" {

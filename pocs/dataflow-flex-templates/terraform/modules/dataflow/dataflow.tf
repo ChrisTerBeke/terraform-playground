@@ -1,9 +1,11 @@
 data "google_project" "current_project" {}
 
 resource "google_dataflow_flex_template_job" "dataflow_job" {
+  count                   = var.enabled ? 1 : 0
   provider                = google-beta
   name                    = local.dataflow_job_name
   container_spec_gcs_path = "gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}"
+  on_delete               = "drain"
 
   parameters = {
     input_subscription = google_pubsub_subscription.pubsub_subscription.id

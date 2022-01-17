@@ -2,6 +2,11 @@ variable "name_prefix" {
   type = string
 }
 
+variable "enabled" {
+  type    = bool
+  default = true
+}
+
 variable "default_location" {
   type    = string
   default = "EU"
