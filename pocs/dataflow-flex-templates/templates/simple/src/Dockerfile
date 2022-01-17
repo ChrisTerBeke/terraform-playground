@@ -15,5 +15,3 @@ RUN apt-get update \
 ENV PIP_NO_DEPS=True
 
 COPY streaming_beam.py $FLEX_TEMPLATE_PYTHON_PY_FILE
-
-ENTRYPOINT ["/opt/google/dataflow/python_template_launcher"]
