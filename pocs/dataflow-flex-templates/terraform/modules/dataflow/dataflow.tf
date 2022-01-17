@@ -10,6 +10,7 @@ resource "google_dataflow_flex_template_job" "dataflow_job" {
   count                   = var.enabled ? 1 : 0
   provider                = google-beta
   name                    = local.dataflow_job_name
+  region                  = google_compute_subnetwork.vpc_subnetwork.region
   container_spec_gcs_path = "gs://${data.google_storage_bucket_object.template_metadata.0.bucket}/${data.google_storage_bucket_object.template_metadata.0.name}"
   on_delete               = "drain"
 
