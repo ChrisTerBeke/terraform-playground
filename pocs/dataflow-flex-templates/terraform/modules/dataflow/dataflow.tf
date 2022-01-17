@@ -2,15 +2,15 @@ data "google_project" "current_project" {}
 
 data "google_storage_bucket_object" "template_metadata" {
   count  = var.enabled ? 1 : 0
-  name   = var.template_storage_bucket
-  bucket = var.template_storage_path
+  name   = var.template_storage_path
+  bucket = var.template_storage_bucket
 }
 
 resource "google_dataflow_flex_template_job" "dataflow_job" {
   count                   = var.enabled ? 1 : 0
   provider                = google-beta
   name                    = local.dataflow_job_name
-  container_spec_gcs_path = "gs://${var.template_storage_bucket}/${var.template_storage_path}"
+  container_spec_gcs_path = "gs://${data.google_storage_bucket_object.template_metadata.0.bucket}/${data.google_storage_bucket_object.template_metadata.0.name}"
   on_delete               = "drain"
 
   parameters = {
