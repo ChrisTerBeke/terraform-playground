@@ -2,6 +2,10 @@ variable "name_prefix" {
   type = string
 }
 
+variable "storage_location" {
+  type = string
+}
+
 variable "template_github_repository" {
   type = string
 }
@@ -18,8 +22,4 @@ variable "template_metadata_file_path" {
 variable "template_source_code_directory" {
   type    = string
   default = "src"
-}
-
-variable "storage_location" {
-  type    = string
 }
