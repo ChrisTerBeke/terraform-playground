@@ -1,14 +1,14 @@
 resource "google_storage_bucket" "storage_bucket" {
-  name     = "christerbeke-dataflow-storage"
-  location = "EU"
+  name     = local.storage_bucket_name
+  location = var.default_location
 }
 
 resource "google_storage_bucket_object" "dataflow_metadata" {
-  name    = "templates/streaming-beam/metadata.json"
+  name    = local.storage_template_metadata_file_path
   bucket  = google_storage_bucket.storage_bucket.name
   content = "{}"
 
-  // will be dynamically updated by Cloud Build job
+  // These attributes will be dynamically updated by Cloud Build job so we should ignore them here to prevent conflicts.
   lifecycle {
     ignore_changes = [
       content,

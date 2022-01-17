@@ -1,8 +1,8 @@
 resource "google_pubsub_topic" "pubsub_topic" {
-  name = "pubsub-topic"
+  name = local.pubsub_topic_name
 }
 
 resource "google_pubsub_subscription" "pubsub_subscription" {
-  name  = "pubsub-subscription"
+  name  = local.pubsub_subsciption_name
   topic = google_pubsub_topic.pubsub_topic.name
 }

@@ -1,9 +1,9 @@
 resource "google_compute_network" "vpc_network" {
-  name = "dataflow-network"
+  name = local.vpc_network_name
 }
 
 resource "google_compute_subnetwork" "vpc_subnetwork" {
-  name          = "dataflow-subnetwork-eu"
+  name          = local.vpc_subnet_name
   network       = google_compute_network.vpc_network.id
-  ip_cidr_range = "10.2.0.0/16"
+  ip_cidr_range = local.vpc_subnet_cidr_range
 }
