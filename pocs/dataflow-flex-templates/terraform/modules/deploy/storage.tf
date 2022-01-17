@@ -1,6 +1,6 @@
 resource "google_storage_bucket" "storage_bucket" {
   name     = local.storage_bucket_name
-  location = var.default_location
+  location = var.storage_location
 }
 
 resource "google_storage_bucket_object" "dataflow_metadata" {

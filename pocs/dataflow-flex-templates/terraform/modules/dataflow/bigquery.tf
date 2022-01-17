@@ -1,6 +1,6 @@
 resource "google_bigquery_dataset" "bigquery_dataset" {
   dataset_id = local.bigquery_dataset_id
-  location   = var.default_location
+  location   = var.bigquery_location
 }
 
 resource "google_bigquery_table" "bigquery_table" {

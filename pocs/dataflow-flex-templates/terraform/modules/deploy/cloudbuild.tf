@@ -1,6 +1,6 @@
 resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
   name           = local.cloudbuild_trigger_name
-  included_files = ["${var.template_source_directory}/**"]
+  included_files = ["${var.template_directory}/**"]
 
   github {
     owner = local.github_repo_owner
@@ -16,9 +16,9 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       id   = "Build Dataflow flex template image"
       name = "gcr.io/kaniko-project/executor:latest"
       args = [
-        "--destination=eu.gcr.io/$PROJECT_ID/${local.template_image_name}:$COMMIT_SHA",
+        "--destination=eu.gcr.io/$PROJECT_ID/${local.template_image_name}:${local.github_repo_branch}",
         "--cache=true",
-        "--context=dir://${var.template_source_directory}",
+        "--context=dir://${local.template_source_code_directory}",
       ]
     }
 
@@ -28,9 +28,9 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       args = [
         "dataflow", "flex-template", "build",
         "gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}",
-        "--image", "eu.gcr.io/$PROJECT_ID/${local.template_image_name}:$COMMIT_SHA",
+        "--image", "eu.gcr.io/$PROJECT_ID/${local.template_image_name}:${local.github_repo_branch}",
         "--sdk-language", "PYTHON",
-        "--metadata-file", "${var.template_metadata_file_path}",
+        "--metadata-file", "${local.template_metadata_file_path}",
       ]
     }
   }
