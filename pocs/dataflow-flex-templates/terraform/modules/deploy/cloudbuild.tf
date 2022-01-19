@@ -16,7 +16,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       id   = "Build Dataflow flex template image"
       name = "gcr.io/kaniko-project/executor:latest"
       args = [
-        "--destination=eu.gcr.io/$PROJECT_ID/${local.template_image_name}:${local.github_repo_branch}",
+        "--destination=eu.gcr.io/$PROJECT_ID/${local.template_image_name}:$COMMIT_SHA",
         "--cache=true",
         "--context=dir://${local.template_source_code_directory}",
       ]
@@ -28,7 +28,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       args = [
         "dataflow", "flex-template", "build",
         "gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}",
-        "--image", "eu.gcr.io/$PROJECT_ID/${local.template_image_name}:${local.github_repo_branch}",
+        "--image", "eu.gcr.io/$PROJECT_ID/${local.template_image_name}:$COMMIT_SHA",
         "--sdk-language", "PYTHON",
         "--metadata-file", "${local.template_metadata_file_path}",
       ]
