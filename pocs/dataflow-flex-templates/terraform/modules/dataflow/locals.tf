@@ -15,9 +15,9 @@ locals {
 
   dataflow_service_account_roles = [
     "dataflow.worker", "dataflow.admin", // Dataflow mandatory
-    "storage.objectViewer", // container registry image downloads
+    "storage.objectViewer",              // container registry image downloads
     // TODO: make roles below this line configurable depending on used template
-    "bigquery.dataOwner", // BigQuery access
+    "bigquery.dataOwner",                // BigQuery access
     "pubsub.subscriber", "pubsub.viewer" // PubSub access
   ]
 }
