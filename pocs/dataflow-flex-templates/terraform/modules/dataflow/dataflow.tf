@@ -30,6 +30,7 @@ resource "google_dataflow_flex_template_job" "dataflow_job" {
     output_table          = "${data.google_project.current_project.project_id}:${google_bigquery_dataset.bigquery_dataset.dataset_id}.${google_bigquery_table.bigquery_table.table_id}"
     subnetwork            = "regions/${google_compute_subnetwork.vpc_subnetwork.region}/subnetworks/${google_compute_subnetwork.vpc_subnetwork.name}"
     service_account_email = google_service_account.dataflow_service_account.email
+    max_num_workers       = var.dataflow_max_workers
     metadata_file_md5     = data.google_storage_bucket_object.template_metadata.0.md5hash // triggers re-deployment when template is updated via Cloud Build
   }
 }

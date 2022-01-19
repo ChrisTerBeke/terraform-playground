@@ -7,7 +7,7 @@ variable "bigquery_schema_file_path" {
 }
 
 variable "bigquery_location" {
-  type    = string
+  type = string
 }
 
 variable "vpc_subnet_ip_block" {
@@ -25,4 +25,9 @@ variable "template_storage_path" {
 variable "enabled" {
   type    = bool
   default = true
+}
+
+variable "dataflow_max_workers" {
+  type    = number
+  default = 10
 }
