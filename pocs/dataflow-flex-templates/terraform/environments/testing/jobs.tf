@@ -10,15 +10,3 @@ module "dataflow_simple" {
   template_storage_path     = module.deploy_template_simple.template_storage_path
   dataflow_max_workers      = 5
 }
-
-# module "dataflow_simple_2" {
-#   source = "../../modules/dataflow"
-
-#   name_prefix               = "ctb-simple-two"
-#   enabled                   = true
-#   bigquery_schema_file_path = file("../../../templates/simple/schema.json")
-#   bigquery_location         = local.default_location
-#   vpc_subnet_ip_block       = "10.3.0.0"
-#   template_storage_bucket   = module.deploy_template_simple.template_storage_bucket
-#   template_storage_path     = module.deploy_template_simple.template_storage_path
-# }
