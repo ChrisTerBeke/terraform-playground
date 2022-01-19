@@ -12,4 +12,12 @@ locals {
   template_image_name                 = "${var.name_prefix}-dataflow-template-image"
   storage_bucket_name                 = "${var.name_prefix}-dataflow-storage"
   storage_template_metadata_file_path = "dataflow-flex-templates/${var.name_prefix}/metadata.json"
+
+  dataflow_service_account_roles = [
+    "dataflow.worker", "dataflow.admin", // Dataflow mandatory
+    "storage.objectViewer", // container registry image downloads
+    // TODO: make roles below this line configurable depending on used template
+    "bigquery.dataOwner", // BigQuery access
+    "pubsub.subscriber", "pubsub.viewer" // PubSub access
+  ]
 }
