@@ -12,7 +12,7 @@ Since dangling keys pose a security risk, not having them at all is a great feat
 
 ## Generate an RSA key pair
 
-First you need an RSA key pair that you can add to our IAM user later on.
+First you need an RSA key pair that you can add to an IAM user later on.
 
 ```bash
 ssh-keygen -t rsa
@@ -97,6 +97,8 @@ resource "google_compute_instance" "debian_vm" {
   }
 }
 ```
+
+> Notice the `enable-oslogin: "TRUE"` metadata flag. This is the key to making this work.
 
 ## Let's connect
 
