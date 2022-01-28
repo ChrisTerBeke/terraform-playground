@@ -1,6 +1,6 @@
 # How to use OS Login for SSH access to VMs on GCP
 
-A few weeks ago I blogged about how to use Terraform to automatically provision SSH keys for a VM on GCP.
+A few weeks ago I blogged about how to [use Terraform to automatically provision SSH keys for a VM on GCP](https://binx.io/blog/2022/01/07/how-to-create-a-vm-with-ssh-enabled-on-gcp/).
 On of the recommendendations I gave at the end was using OS Login, instead of managing keys for each individual machine.
 In this blog post we will take a look at [OS Login](https://cloud.google.com/compute/docs/instances/managing-instance-access) and how it can help you to keep your SSH keys clean.
 
