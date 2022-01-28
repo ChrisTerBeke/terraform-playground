@@ -8,5 +8,5 @@ module "dataflow_simple" {
   vpc_subnet_ip_block       = "10.2.0.0"
   template_storage_bucket   = module.deploy_template_simple.template_storage_bucket
   template_storage_path     = module.deploy_template_simple.template_storage_path
-  dataflow_max_workers      = 5
+  dataflow_max_workers      = 2
 }
