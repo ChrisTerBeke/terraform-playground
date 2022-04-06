@@ -1,4 +1,4 @@
-module "project-playground-christerbeke" {
+module "project_playground_christerbeke" {
   source = "./modules/gcp_project"
 
   name            = "playground-christerbeke"
@@ -9,4 +9,16 @@ module "project-playground-christerbeke" {
   labels = {
     managed_by = "terraform"
   }
+}
+
+moved {
+  from = module.project-playground-christerbeke
+  to   = module.project_playground_christerbeke
+}
+
+module "network_playground" {
+  source = "./modules/gcp_network"
+
+  project_id = module.project_playground_christerbeke.project_id
+  name       = "playground-network"
 }
