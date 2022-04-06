@@ -11,11 +11,6 @@ module "project_playground_christerbeke" {
   }
 }
 
-moved {
-  from = module.project-playground-christerbeke
-  to   = module.project_playground_christerbeke
-}
-
 module "network_playground" {
   source = "./modules/gcp_network"
 
