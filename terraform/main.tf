@@ -23,4 +23,5 @@ module "dataflow_flex_simple" {
 
   project_id = module.project_playground_christerbeke.project_id
   name       = "dataflow-flex-simple"
+  enabled    = false
 }

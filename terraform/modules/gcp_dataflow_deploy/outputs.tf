@@ -1,7 +1,7 @@
 output "template_storage_bucket" {
-  value = google_storage_bucket_object.dataflow_metadata.bucket
+  value = coalescelist(google_storage_bucket_object.dataflow_metadata.*.bucket, [""])[0]
 }
 
 output "template_storage_path" {
-  value = google_storage_bucket_object.dataflow_metadata.name
+  value = coalescelist(google_storage_bucket_object.dataflow_metadata.*.name, [""])[0]
 }
