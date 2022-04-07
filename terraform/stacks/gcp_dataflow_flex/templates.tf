@@ -1,5 +1,5 @@
 module "deploy_template_simple" {
-  source = "../../../modules/gcp_dataflow_deploy"
+  source = "../../modules/gcp_dataflow_deploy"
 
   project_id                 = var.project_id
   name_prefix                = var.name
