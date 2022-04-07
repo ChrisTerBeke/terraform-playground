@@ -37,3 +37,9 @@ variable "auto_create_network" {
   type        = bool
   default     = false
 }
+
+variable "services" {
+  description = "List of APIs and services to enable in this project."
+  type        = list(string)
+  default     = ["compute", "cloudtrace", "dns", "iam", "iamcredentials", "logging", "monitoring", "runtimeconfig", "servicemanagement", "serviceusage", "storage"]
+}
