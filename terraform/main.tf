@@ -16,6 +16,10 @@ module "network_playground" {
 
   project_id = module.project_playground_christerbeke.project_id
   name       = "playground-network"
+
+  depends_on = [
+    module.project_playground_christerbeke,
+  ]
 }
 
 module "dataflow_flex_simple" {
@@ -24,4 +28,8 @@ module "dataflow_flex_simple" {
   project_id = module.project_playground_christerbeke.project_id
   name       = "dataflow-flex-simple"
   enabled    = false
+
+  depends_on = [
+    module.project_playground_christerbeke,
+  ]
 }
