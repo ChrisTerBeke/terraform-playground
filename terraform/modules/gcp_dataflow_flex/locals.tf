@@ -3,7 +3,7 @@ locals {
   vpc_subnet_name                     = "${var.name_prefix}-subnet"
   vpc_subnet_cidr_range               = "${var.vpc_subnet_ip_block}/16"
   dataflow_job_name                   = "${var.name_prefix}-job"
-  dataflow_service_account_name       = "${var.name_prefix}-service-account"
+  dataflow_service_account_name       = "${var.name_prefix}-sa"
   pubsub_topic_name                   = "${var.name_prefix}-topic"
   pubsub_subsciption_name             = "${var.name_prefix}-subscription"
   bigquery_dataset_id                 = "${replace(var.name_prefix, "-", "_")}_dataset"

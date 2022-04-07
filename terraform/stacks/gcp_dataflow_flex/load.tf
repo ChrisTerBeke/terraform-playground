@@ -1,5 +1,8 @@
 resource "google_cloud_scheduler_job" "test_load_scheduler" {
-  name     = "ctb-test-load"
+  count = var.enabled ? 1 : 0
+
+  project  = var.project_id
+  name     = "${var.name}-load"
   schedule = "* * * * *" // every minute
   region   = "europe-west1"
 
@@ -10,7 +13,10 @@ resource "google_cloud_scheduler_job" "test_load_scheduler" {
 }
 
 resource "google_cloud_scheduler_job" "test_load_scheduler_negative" {
-  name     = "ctb-test-load-negative"
+  count = var.enabled ? 1 : 0
+
+  project  = var.project_id
+  name     = "${var.name}-load-negative"
   schedule = "*/2 * * * *" // every two minutes
   region   = "europe-west1"
 

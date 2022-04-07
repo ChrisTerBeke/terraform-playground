@@ -17,3 +17,11 @@ module "network_playground" {
   project_id = module.project_playground_christerbeke.project_id
   name       = "playground-network"
 }
+
+module "dataflow_flex_simple" {
+  source = "./stacks/gcp_dataflow_flex"
+
+  project_id = module.project_playground_christerbeke.project_id
+  name       = "dataflow-flex-simple"
+  enabled    = false
+}
