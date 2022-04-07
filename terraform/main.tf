@@ -17,3 +17,9 @@ module "network_playground" {
   project_id = module.project_playground_christerbeke.project_id
   name       = "playground-network"
 }
+
+module "dataflow_flex_template_stack" {
+  source = "./stacks/gcp_dataflow_flex/terraform"
+
+  project_id = module.project_playground_christerbeke.project_id
+}

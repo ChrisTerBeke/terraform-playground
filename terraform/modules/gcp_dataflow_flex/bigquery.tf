@@ -1,9 +1,11 @@
 resource "google_bigquery_dataset" "bigquery_dataset" {
+  project    = var.project_id
   dataset_id = local.bigquery_dataset_id
   location   = var.bigquery_location
 }
 
 resource "google_bigquery_table" "bigquery_table" {
+  project    = var.project_id
   table_id   = local.bigquery_table_id
   dataset_id = google_bigquery_dataset.bigquery_dataset.dataset_id
   schema     = var.bigquery_schema_file_path

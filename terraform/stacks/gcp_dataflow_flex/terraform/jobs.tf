@@ -1,6 +1,7 @@
 module "dataflow_simple" {
-  source = "../../modules/dataflow"
+  source = "../../../modules/gcp_dataflow_flex"
 
+  project_id                = var.project_id
   name_prefix               = "ctb-simple"
   enabled                   = true
   bigquery_schema_file_path = file("../../../templates/simple/schema.json")

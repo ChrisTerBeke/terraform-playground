@@ -1,4 +1,5 @@
 resource "google_storage_bucket" "storage_bucket" {
+  project  = var.project_id
   name     = local.storage_bucket_name
   location = var.storage_location
 }
