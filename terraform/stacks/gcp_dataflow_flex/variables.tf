@@ -3,8 +3,18 @@ variable "project_id" {
   type        = string
 }
 
+variable "region" {
+  description = "The region to run the Dataflow job in."
+  type        = string
+}
+
 variable "name" {
   description = "The name of the stack. Used to name all resources."
+  type        = string
+}
+
+variable "vcp_subnet_name" {
+  description = "The VPC subnetwork in which the resources should run."
   type        = string
 }
 

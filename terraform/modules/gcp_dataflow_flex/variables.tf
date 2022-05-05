@@ -3,19 +3,15 @@ variable "project_id" {
   type        = string
 }
 
+variable "region" {
+  type = string
+}
+
 variable "name_prefix" {
   type = string
 }
 
-variable "bigquery_schema_file_path" {
-  type = string
-}
-
-variable "bigquery_location" {
-  type = string
-}
-
-variable "vpc_subnet_ip_block" {
+variable "vcp_subnet_name" {
   type = string
 }
 
@@ -32,7 +28,11 @@ variable "enabled" {
   default = true
 }
 
-variable "dataflow_max_workers" {
+variable "max_workers" {
   type    = number
   default = 10
+}
+
+variable "job_parameters" {
+  type = map(any)
 }
