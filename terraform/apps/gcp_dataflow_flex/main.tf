@@ -2,7 +2,7 @@
 # TODO: make this configurable
 
 module "pubsub" {
-  source = "../gcp_pubsub"
+  source = "../../modules/gcp_pubsub"
 
   enabled             = var.enabled
   project_id          = var.project_id
@@ -11,7 +11,7 @@ module "pubsub" {
 }
 
 module "bigquery" {
-  source = "../gcp_bigquery"
+  source = "../../modules/gcp_bigquery"
 
   enabled          = var.enabled
   project_id       = var.project_id
@@ -20,7 +20,7 @@ module "bigquery" {
 }
 
 module "dataflow_template" {
-  source = "../modules/gcp_dataflow_deploy"
+  source = "../../modules/gcp_dataflow_deploy"
 
   enabled                    = var.enabled
   project_id                 = var.project_id
@@ -31,7 +31,7 @@ module "dataflow_template" {
 }
 
 module "dataflow_job" {
-  source = "../modules/gcp_dataflow_flex"
+  source = "../../modules/gcp_dataflow_flex"
 
   enabled              = var.enabled
   project_id           = var.project_id
