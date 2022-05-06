@@ -1,18 +1,14 @@
+locals {
+  dataflow_service_account_roles = concat(["dataflow.worker", "dataflow.admin", "storage.objectViewer"], var.extra_roles)
+  template_bucket                = split(trimprefix(var.template_storage_url, "gs://"))[0]
+  template_path                  = trimprefix(var.template_storage_location, "gs://${local.template_bucket}")
+}
+
 data "google_storage_bucket_object" "template_metadata" {
   count = var.enabled ? 1 : 0
 
-  name   = var.template_storage_path
-  bucket = var.template_storage_bucket
-}
-
-locals {
-  dataflow_service_account_roles = [
-    "dataflow.worker", "dataflow.admin", // Dataflow mandatory
-    "storage.objectViewer",              // container registry image downloads
-    // TODO: make roles below this line configurable depending on used template
-    "bigquery.dataOwner",                // BigQuery access
-    "pubsub.subscriber", "pubsub.viewer" // PubSub access
-  ]
+  name   = local.template_path
+  bucket = local.template_bucket
 }
 
 // TODO: extract service account

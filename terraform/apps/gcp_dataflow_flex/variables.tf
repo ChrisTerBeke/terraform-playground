@@ -8,8 +8,8 @@ variable "region" {
   type        = string
 }
 
-variable "name" {
-  description = "The name of the stack. Used to name all resources."
+variable "app_name" {
+  description = "The name of the application."
   type        = string
 }
 
@@ -18,8 +18,20 @@ variable "vcp_subnet_name" {
   type        = string
 }
 
+variable "template_storage_location" {
+  type = string
+}
+
+variable "template_github_repository" {
+  type = string
+}
+
+variable "template_directory" {
+  type = string
+}
+
 variable "enabled" {
-  description = "Whether this stack is enabled or not. A disabled stack will not provision any resources."
+  description = "Whether this stack is enabled or not. A disabled app will not provision any resources."
   type        = bool
   default     = true
 }
