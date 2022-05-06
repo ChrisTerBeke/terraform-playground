@@ -27,7 +27,6 @@ resource "google_project_iam_member" "dataflow_service_account_iam_member" {
   role    = "roles/${each.key}"
 }
 
-
 resource "google_dataflow_flex_template_job" "dataflow_job" {
   count = var.enabled ? 1 : 0
 
