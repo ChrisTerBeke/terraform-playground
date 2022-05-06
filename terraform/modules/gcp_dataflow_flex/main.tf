@@ -1,7 +1,7 @@
 locals {
   dataflow_service_account_roles = concat(["dataflow.worker", "dataflow.admin", "storage.objectViewer"], var.extra_roles)
-  template_bucket                = split(trimprefix(var.template_storage_url, "gs://"))[0]
-  template_path                  = trimprefix(var.template_storage_location, "gs://${local.template_bucket}")
+  template_bucket                = split(trimprefix(var.template_storage_url, "gs://"), "/")[0]
+  template_path                  = trimprefix(var.template_storage_url, "gs://${local.template_bucket}")
 }
 
 data "google_storage_bucket_object" "template_metadata" {

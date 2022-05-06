@@ -13,10 +13,10 @@ module "pubsub" {
 module "bigquery" {
   source = "../../modules/gcp_bigquery"
 
-  enabled          = var.enabled
-  project_id       = var.project_id
-  name_prefix      = var.app_name
-  location         = "EU"
+  enabled     = var.enabled
+  project_id  = var.project_id
+  name_prefix = var.app_name
+  location    = "EU"
 }
 
 module "dataflow_template" {
@@ -42,7 +42,8 @@ module "dataflow_job" {
   extra_roles          = ["bigquery.dataOwner", "pubsub.subscriber", "pubsub.viewer"]
 
   job_parameters = {
-    # TODO
+    input_subscription = module.pubsub.subscription_id,
+    output_table       = module.bigquery.table_id
   }
 
   depends_on = [
