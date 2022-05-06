@@ -11,10 +11,6 @@ variable "location" {
   type = string
 }
 
-variable "schema_file_path" {
-  type = string
-}
-
 variable "enabled" {
   type    = bool
   default = true

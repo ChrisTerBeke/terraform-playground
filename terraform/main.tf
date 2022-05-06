@@ -28,14 +28,14 @@ module "network_playground" {
 module "dataflow_flex_simple" {
   source = "./apps/gcp_dataflow_flex"
 
-  enabled                    = false
+  enabled                    = true
   project_id                 = module.project_playground_christerbeke.project_id
   app_name                   = "dataflow-flex-simple"
   region                     = "europe-west1"
   vcp_subnet_name            = module.network_playground.subnet_name
   template_storage_location  = "EU"
-  template_github_repository = "ChrisTerBeke/terraform-playground:main"
-  template_directory         = "dataflow/templates/simple"
+  template_github_repository = "ChrisTerBeke/terraform-playground-dataflow-templates:main"
+  template_directory         = "simple"
 
   depends_on = [
     module.project_playground_christerbeke,

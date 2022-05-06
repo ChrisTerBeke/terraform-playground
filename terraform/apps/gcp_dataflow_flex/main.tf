@@ -1,23 +1,23 @@
 # pipeline: pubsub -> dataflow -> bigquery
+# TODO: make this configurable
 
-# module "pubsub" {
-#   source = "../gcp_pubsub"
+module "pubsub" {
+  source = "../gcp_pubsub"
 
-#   enabled             = var.enabled
-#   project_id          = var.project_id
-#   name_prefix         = var.name_prefix
-#   create_subscription = true
-# }
+  enabled             = var.enabled
+  project_id          = var.project_id
+  name_prefix         = var.app_name
+  create_subscription = true
+}
 
-# module "bigquery" {
-#   source = "../gcp_bigquery"
+module "bigquery" {
+  source = "../gcp_bigquery"
 
-#   enabled          = var.enabled
-#   project_id       = var.project_id
-#   name_prefix      = var.name_prefix
-#   location         = var.bigquery_location
-#   schema_file_path = var.bigquery_schema_file_path
-# }
+  enabled          = var.enabled
+  project_id       = var.project_id
+  name_prefix      = var.app_name
+  location         = "EU"
+}
 
 module "dataflow_template" {
   source = "../modules/gcp_dataflow_deploy"
