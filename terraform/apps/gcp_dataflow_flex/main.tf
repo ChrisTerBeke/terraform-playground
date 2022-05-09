@@ -13,10 +13,11 @@ module "pubsub" {
 module "bigquery" {
   source = "../../modules/gcp_bigquery"
 
-  enabled     = var.enabled
-  project_id  = var.project_id
-  name_prefix = var.app_name
-  location    = "EU"
+  enabled       = var.enabled
+  project_id    = var.project_id
+  name_prefix   = var.app_name
+  location      = "EU"
+  allow_destroy = true
 }
 
 module "dataflow_template" {

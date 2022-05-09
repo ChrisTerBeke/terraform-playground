@@ -20,3 +20,8 @@ variable "time_partitioning" {
   type    = string
   default = "DAY"
 }
+
+variable "allow_destroy" {
+  type    = bool
+  default = false
+}
