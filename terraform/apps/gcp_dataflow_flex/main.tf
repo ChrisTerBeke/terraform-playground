@@ -49,5 +49,7 @@ module "dataflow_job" {
 
   depends_on = [
     module.dataflow_template,
+    module.pubsub,
+    module.bigquery,
   ]
 }
