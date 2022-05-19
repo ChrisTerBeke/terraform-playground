@@ -28,8 +28,8 @@ resource "google_cloud_run_service" "service" {
   dynamic "traffic" {
     for_each = var.revisions
     content {
-      revision_name = var.key
-      percent       = var.value
+      revision_name = traffic.key
+      percent       = traffic.value
     }
   }
 }
