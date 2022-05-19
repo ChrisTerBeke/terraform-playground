@@ -42,3 +42,17 @@ module "dataflow_flex_simple" {
     module.network_playground,
   ]
 }
+
+module "cloud_run_placeholder" {
+  source = "./apps/gcp_cloud_run"
+
+  # enabled    = false
+  project_id = module.project_playground_christerbeke.project_id
+  app_name   = "placeholder"
+  location   = "europe-west1-d"
+  image      = "gcr.io/cloudrun/placeholder"
+
+  depends_on = [
+    module.project_playground_christerbeke,
+  ]
+}
