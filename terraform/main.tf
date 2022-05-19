@@ -5,7 +5,7 @@ module "project_playground_christerbeke" {
   project_id      = "playground-christerbeke"
   org_id          = var.gcp_org_id
   billing_account = var.gcp_billing_account
-  services        = ["dataflow", "cloudbuild", "compute", "cloudtrace", "dns", "iam", "iamcredentials", "logging", "monitoring", "runtimeconfig", "servicemanagement", "serviceusage", "storage"]
+  services        = ["dataflow", "cloudbuild", "compute", "cloudtrace", "dns", "iam", "iamcredentials", "logging", "monitoring", "run", "runtimeconfig", "servicemanagement", "serviceusage", "storage"]
 
   labels = {
     managed_by = "terraform"
