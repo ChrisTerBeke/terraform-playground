@@ -7,6 +7,12 @@ module "cloud_run" {
   revision_name = "${var.app_name}-1"
   location      = var.location
   image         = var.image
-  env_vars      = {}
-  revisions     = {}
+
+  env_vars = {
+
+  }
+
+  revisions = {
+    "${var.app_name}-1" = 100
+  }
 }
