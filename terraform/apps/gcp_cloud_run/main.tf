@@ -4,15 +4,16 @@ module "cloud_run" {
   project_id    = var.project_id
   enabled       = var.enabled
   name          = var.app_name
-  revision_name = "${var.app_name}-1"
+  revision_name = "${var.app_name}-2"
   region        = var.region
   image         = var.image
 
   env_vars = {
-
+    "hello" = "world"
   }
 
   revisions = {
-    "${var.app_name}-1" = 100
+    "${var.app_name}-1" = 50
+    "${var.app_name}-2" = 50
   }
 }
