@@ -49,7 +49,7 @@ module "cloud_run_placeholder" {
   # enabled    = false
   project_id = module.project_playground_christerbeke.project_id
   app_name   = "placeholder"
-  location   = "europe-west1-d"
+  region     = "europe-west1"
   image      = "gcr.io/cloudrun/placeholder"
 
   depends_on = [

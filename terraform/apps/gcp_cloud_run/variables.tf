@@ -3,8 +3,8 @@ variable "project_id" {
   type        = string
 }
 
-variable "location" {
-  description = "The location to run the Cloud Run service in."
+variable "locregionation" {
+  description = "The GCP region to run the Cloud Run service in."
   type        = string
 }
 

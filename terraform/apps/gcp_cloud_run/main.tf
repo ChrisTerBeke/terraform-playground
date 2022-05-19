@@ -5,7 +5,7 @@ module "cloud_run" {
   enabled       = var.enabled
   name          = var.app_name
   revision_name = "${var.app_name}-1"
-  location      = var.location
+  region        = var.region
   image         = var.image
 
   env_vars = {

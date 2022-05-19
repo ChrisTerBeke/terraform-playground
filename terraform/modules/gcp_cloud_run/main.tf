@@ -2,7 +2,7 @@ resource "google_cloud_run_service" "service" {
   count = var.enabled ? 1 : 0
 
   name     = var.name
-  location = var.location
+  location = var.region
   project  = var.project_id
 
   template {

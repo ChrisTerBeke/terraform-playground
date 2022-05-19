@@ -16,7 +16,7 @@ variable "revision_name" {
   type = string
 }
 
-variable "location" {
+variable "region" {
   type = string
 }
 
