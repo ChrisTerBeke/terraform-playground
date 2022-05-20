@@ -25,6 +25,12 @@ resource "google_cloud_run_service" "service" {
     }
   }
 
+  metadata {
+    annotations = {
+      "run.googleapis.com/ingress" = var.ingress_annotation
+    }
+  }
+
   dynamic "traffic" {
     for_each = var.revisions
     content {
@@ -32,4 +38,17 @@ resource "google_cloud_run_service" "service" {
       percent       = traffic.value
     }
   }
+}
+
+resource "google_cloud_run_service_iam_member" "service_iam_member" {
+  count = var.enabled ? 1 : 0
+
+  service  = google_cloud_run_service.service.0.name
+  location = google_cloud_run_service.service.0.location
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+
+  depends_on = [
+    google_cloud_run_service.service,
+  ]
 }

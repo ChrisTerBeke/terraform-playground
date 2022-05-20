@@ -33,3 +33,8 @@ variable "revisions" {
   type    = map(string)
   default = {}
 }
+
+variable "ingress_annotation" {
+  type    = string
+  default = "all"
+}
