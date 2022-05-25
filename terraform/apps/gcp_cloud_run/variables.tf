@@ -3,6 +3,12 @@ variable "project_id" {
   type        = string
 }
 
+variable "enabled" {
+  description = "Whether this stack is enabled or not. A disabled app will not provision any resources."
+  type        = bool
+  default     = true
+}
+
 variable "region" {
   description = "The GCP region to run the Cloud Run service in."
   type        = string
@@ -18,8 +24,7 @@ variable "image" {
   type        = string
 }
 
-variable "enabled" {
-  description = "Whether this stack is enabled or not. A disabled app will not provision any resources."
-  type        = bool
-  default     = true
+variable "domains" {
+  type    = list(string)
+  default = []
 }

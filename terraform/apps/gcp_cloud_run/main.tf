@@ -30,6 +30,7 @@ module "ingress" {
   name              = var.app_name
   region            = var.region
   cloud_run_service = module.cloud_run.service_name
+  domains           = var.domains
 
   depends_on = [
     module.cloud_run,
