@@ -5,7 +5,8 @@ resource "google_compute_managed_ssl_certificate" "ssl_cert" {
   name    = "${var.name}-ssl-cert"
 
   managed {
-    domains = var.domains
+    # domains = var.domains
+    domains = ["placeholder.gcp.christerbeke.com"]
   }
 }
 
