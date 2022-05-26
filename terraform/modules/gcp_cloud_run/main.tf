@@ -1,9 +1,9 @@
 resource "google_cloud_run_service" "service" {
   count = var.enabled ? 1 : 0
 
+  project  = var.project_id
   name     = var.name
   location = var.region
-  project  = var.project_id
 
   template {
     spec {
@@ -24,6 +24,8 @@ resource "google_cloud_run_service" "service" {
       name = var.revision_name
     }
   }
+
+  # TODO: use separate service account for Cloud Run services
 
   metadata {
     annotations = {
