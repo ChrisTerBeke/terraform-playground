@@ -1,14 +1,3 @@
-resource "google_compute_managed_ssl_certificate" "ssl_cert" {
-  count = var.enabled ? 1 : 0
-
-  project = var.project_id
-  name    = "${var.name}-ssl-cert"
-
-  managed {
-    domains = ["placeholder.gcp.christerbeke.com"]
-  }
-}
-
 resource "google_compute_managed_ssl_certificate" "cert" {
   count = var.enabled ? 1 : 0
 
