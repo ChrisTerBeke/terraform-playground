@@ -3,7 +3,7 @@ module "cloud_run" {
 
   project_id    = var.project_id
   name          = var.app_name
-  revision_name = "${var.app_name}-3"
+  revision_name = "${var.app_name}-4"
   region        = var.region
   image         = var.image
 
@@ -14,7 +14,7 @@ module "cloud_run" {
   }
 
   revisions = {
-    "${var.app_name}-3" = 100
+    "${var.app_name}-4" = 100
   }
 
   # TODO: HA with multiple regions
