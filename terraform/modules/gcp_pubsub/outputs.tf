@@ -1,5 +1,5 @@
 output "topic_id" {
-  value = coalescelist(google_pubsub_topic.topic.*.id, [""])[0]
+  value = google_pubsub_topic.topic.id
 }
 
 output "subscription_id" {

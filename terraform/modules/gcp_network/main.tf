@@ -9,7 +9,7 @@ resource "google_compute_subnetwork" "subnetwork" {
 
   name                     = var.name
   project                  = var.project_id
-  network                  = google_compute_network.network[0].id
+  network                  = google_compute_network.network.id
   region                   = var.subnet_region
   ip_cidr_range            = var.subnet_cidr_range
   private_ip_google_access = true

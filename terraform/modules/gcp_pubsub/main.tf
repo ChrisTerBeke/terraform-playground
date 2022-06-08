@@ -8,5 +8,5 @@ resource "google_pubsub_subscription" "subscription" {
 
   project = var.project_id
   name    = "${var.name_prefix}-subscription"
-  topic   = google_pubsub_topic.topic[0].name
+  topic   = google_pubsub_topic.topic.name
 }

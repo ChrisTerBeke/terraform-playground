@@ -1,5 +1,5 @@
 output "network_id" {
-  value = coalescelist(google_compute_network.network.*.id, [""])[0]
+  value = google_compute_network.network.id
 }
 
 output "subnet_name" {

@@ -28,7 +28,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
       name = "gcr.io/cloud-builders/gcloud"
       args = [
         "dataflow", "flex-template", "build",
-        "gs://${google_storage_bucket.storage_bucket[0].name}/${google_storage_bucket_object.dataflow_metadata[0].name}",
+        "gs://${google_storage_bucket.storage_bucket.name}/${google_storage_bucket_object.dataflow_metadata.name}",
         "--image", "eu.gcr.io/$PROJECT_ID/${local.template_image_name}:$COMMIT_SHA",
         "--sdk-language", "PYTHON",
         "--metadata-file", "${local.template_metadata_file_path}",

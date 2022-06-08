@@ -19,7 +19,7 @@ resource "google_project_iam_member" "dataflow_service_account_iam_member" {
   for_each = toset(local.dataflow_service_account_roles)
 
   project = var.project_id
-  member  = "serviceAccount:${google_service_account.dataflow_service_account[0].email}"
+  member  = "serviceAccount:${google_service_account.dataflow_service_account.email}"
   role    = "roles/${each.key}"
 }
 
@@ -28,13 +28,13 @@ resource "google_dataflow_flex_template_job" "dataflow_job" {
   project                 = var.project_id
   name                    = "${var.name_prefix}-job"
   region                  = var.region
-  container_spec_gcs_path = "gs://${data.google_storage_bucket_object.template_metadata[0].bucket}/${data.google_storage_bucket_object.template_metadata[0].name}"
+  container_spec_gcs_path = "gs://${data.google_storage_bucket_object.template_metadata.bucket}/${data.google_storage_bucket_object.template_metadata.name}"
   on_delete               = "drain"
 
   parameters = merge({
     subnetwork            = var.vcp_subnet_name
-    service_account_email = google_service_account.dataflow_service_account[0].email
+    service_account_email = google_service_account.dataflow_service_account.email
     max_num_workers       = var.max_workers
-    metadata_file_md5     = data.google_storage_bucket_object.template_metadata[0].md5hash // triggers re-deployment when template is updated via Cloud Build
+    metadata_file_md5     = data.google_storage_bucket_object.template_metadata.md5hash // triggers re-deployment when template is updated via Cloud Build
   }, var.job_parameters)
 }

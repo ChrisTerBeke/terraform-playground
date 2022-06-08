@@ -6,7 +6,7 @@ resource "google_storage_bucket" "storage_bucket" {
 
 resource "google_storage_bucket_object" "dataflow_metadata" {
   name    = local.storage_template_metadata_file_path
-  bucket  = google_storage_bucket.storage_bucket[0].name
+  bucket  = google_storage_bucket.storage_bucket.name
   content = "{}"
 
   // These attributes will be dynamically updated by Cloud Build job so we should ignore them here to prevent conflicts.
