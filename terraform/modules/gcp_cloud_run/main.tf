@@ -44,7 +44,8 @@ resource "google_cloud_run_service" "service" {
 
   metadata {
     annotations = {
-      "run.googleapis.com/ingress" = var.ingress_annotation
+      "run.googleapis.com/ingress"      = var.ingress_annotation
+      "run.googleapis.com/launch-stage" = "BETA"
     }
   }
 
