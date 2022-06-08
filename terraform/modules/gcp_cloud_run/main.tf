@@ -12,6 +12,7 @@ resource "google_cloud_run_service" "service" {
   location = var.region
 
   template {
+
     spec {
       service_account_name = module.run_service_account.email
 
@@ -42,6 +43,7 @@ resource "google_cloud_run_service" "service" {
 
   dynamic "traffic" {
     for_each = var.revisions
+
     content {
       revision_name = traffic.key
       percent       = traffic.value
