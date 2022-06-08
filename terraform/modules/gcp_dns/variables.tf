@@ -12,6 +12,6 @@ variable "domain" {
 }
 
 variable "a_records" {
-  type    = map(string)
+  type    = map(list(string))
   default = {}
 }

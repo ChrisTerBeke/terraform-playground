@@ -57,7 +57,7 @@ module "cloud_run_placeholder" {
 }
 
 module "dns_playground" {
-  source = "../modules/gcp_dns"
+  source = "./modules/gcp_dns"
 
   project_id = module.project_playground_christerbeke.project_id
   zone_name  = "cloud-christerbeke-com"
