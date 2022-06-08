@@ -3,10 +3,6 @@ resource "google_dns_managed_zone" "zone" {
   name       = var.zone_name
   dns_name   = "${var.domain}."
   visibility = "public"
-
-  dnssec_config {
-    
-  }
 }
 
 resource "google_dns_record_set" "a_records" {
