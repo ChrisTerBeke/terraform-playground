@@ -7,11 +7,6 @@ variable "name_prefix" {
   type = string
 }
 
-variable "enabled" {
-  type    = bool
-  default = true
-}
-
 variable "storage_location" {
   type = string
 }

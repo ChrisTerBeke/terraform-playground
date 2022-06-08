@@ -8,11 +8,6 @@ variable "project_id" {
   type        = string
 }
 
-variable "enabled" {
-  type    = bool
-  default = true
-}
-
 variable "auto_create_subnetworks" {
   description = "Whether to automatically create the subnetworks or not."
   type        = bool

@@ -4,7 +4,6 @@
 module "pubsub" {
   source = "../../modules/gcp_pubsub"
 
-  enabled             = var.enabled
   project_id          = var.project_id
   name_prefix         = var.app_name
   create_subscription = true
@@ -13,7 +12,6 @@ module "pubsub" {
 module "bigquery" {
   source = "../../modules/gcp_bigquery"
 
-  enabled       = var.enabled
   project_id    = var.project_id
   name_prefix   = var.app_name
   location      = "EU"
@@ -23,7 +21,6 @@ module "bigquery" {
 module "dataflow_template" {
   source = "../../modules/gcp_dataflow_deploy"
 
-  enabled                    = var.enabled
   project_id                 = var.project_id
   name_prefix                = var.app_name
   storage_location           = var.template_storage_location
@@ -34,7 +31,6 @@ module "dataflow_template" {
 module "dataflow_job" {
   source = "../../modules/gcp_dataflow_flex"
 
-  enabled              = var.enabled
   project_id           = var.project_id
   name_prefix          = var.app_name
   region               = var.region

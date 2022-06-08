@@ -1,14 +1,10 @@
 resource "google_compute_url_map" "url_map" {
-  count = var.enabled ? 1 : 0
-
   project         = var.project_id
   name            = "${var.name}-url-map"
-  default_service = google_compute_backend_service.backend.0.id
+  default_service = google_compute_backend_service.backend.id
 }
 
 resource "google_compute_url_map" "url_map_redirect" {
-  count = var.enabled ? 1 : 0
-
   project = var.project_id
   name    = "${var.name}-url-map-redirect"
 

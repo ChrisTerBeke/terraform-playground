@@ -11,11 +11,6 @@ variable "location" {
   type = string
 }
 
-variable "enabled" {
-  type    = bool
-  default = true
-}
-
 variable "time_partitioning" {
   type    = string
   default = "DAY"

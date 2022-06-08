@@ -3,11 +3,6 @@ variable "project_id" {
   type        = string
 }
 
-variable "enabled" {
-  type    = bool
-  default = true
-}
-
 variable "name" {
   type = string
 }

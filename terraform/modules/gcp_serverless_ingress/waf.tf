@@ -1,6 +1,5 @@
 resource "google_compute_security_policy" "waf" {
   provider = google-beta
-  count    = var.enabled ? 1 : 0
 
   project = var.project_id
   name    = "${var.name}-waf"

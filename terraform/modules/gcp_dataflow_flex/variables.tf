@@ -20,11 +20,6 @@ variable "template_storage_url" {
   description = "The location of the Dataflow flex template. Must be of format gs://<bucket>/<path>."
 }
 
-variable "enabled" {
-  type    = bool
-  default = true
-}
-
 variable "max_workers" {
   type    = number
   default = 10

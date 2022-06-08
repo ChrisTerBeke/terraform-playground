@@ -1,6 +1,4 @@
 resource "google_compute_region_network_endpoint_group" "neg" {
-  count = var.enabled ? 1 : 0
-
   project               = var.project_id
   name                  = "${var.name}-neg"
   region                = var.region

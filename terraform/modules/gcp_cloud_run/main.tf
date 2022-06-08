@@ -1,6 +1,4 @@
 resource "google_cloud_run_service" "service" {
-  count = var.enabled ? 1 : 0
-
   project  = var.project_id
   name     = var.name
   location = var.region
@@ -43,11 +41,9 @@ resource "google_cloud_run_service" "service" {
 }
 
 resource "google_cloud_run_service_iam_member" "service_iam_member" {
-  count = var.enabled ? 1 : 0
-
   project  = var.project_id
-  service  = google_cloud_run_service.service.0.name
-  location = google_cloud_run_service.service.0.location
+  service  = google_cloud_run_service.service.name
+  location = google_cloud_run_service.service.location
   role     = "roles/run.invoker"
   member   = "allUsers"
 

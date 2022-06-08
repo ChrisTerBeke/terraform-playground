@@ -1,6 +1,4 @@
 resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
-  count = var.enabled ? 1 : 0
-
   project        = var.project_id
   name           = local.cloudbuild_trigger_name
   included_files = ["${var.template_directory}/**"]
