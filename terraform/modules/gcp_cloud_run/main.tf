@@ -52,9 +52,8 @@ resource "google_cloud_run_service" "service" {
     for_each = var.revisions
 
     content {
-      revision_name   = traffic.key
-      latest_revision = traffic.key == var.revision_name
-      percent         = traffic.value
+      revision_name = traffic.key
+      percent       = traffic.value
     }
   }
 }
