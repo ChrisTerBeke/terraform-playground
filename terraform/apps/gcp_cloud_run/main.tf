@@ -1,21 +1,12 @@
 module "cloud_run" {
   source = "../../modules/gcp_cloud_run"
 
-  project_id    = var.project_id
-  name          = var.app_name
-  revision_name = "${var.app_name}-5"
-  region        = var.region
-  image         = var.image
-
+  project_id         = var.project_id
+  name               = var.app_name
+  revision_name      = "${var.app_name}-5"
+  region             = var.region
+  image              = var.image
   ingress_annotation = "internal-and-cloud-load-balancing"
-
-  env_vars = {
-    "hello" = "world"
-  }
-
-  revisions = {
-    LATEST = 100
-  }
 
   # TODO: HA with multiple regions
 }

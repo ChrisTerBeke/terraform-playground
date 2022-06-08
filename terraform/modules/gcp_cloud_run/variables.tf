@@ -25,8 +25,10 @@ variable "env_vars" {
 }
 
 variable "revisions" {
-  type    = map(string)
-  default = {}
+  type = map(string)
+  default = {
+    LATEST = 100
+  }
 }
 
 variable "min_scale" {
@@ -41,7 +43,7 @@ variable "max_scale" {
 
 variable "ingress_annotation" {
   type    = string
-  default = "all"
+  default = "internal"
 }
 
 variable "service_account_roles" {
