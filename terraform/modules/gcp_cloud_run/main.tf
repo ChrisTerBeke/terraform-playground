@@ -3,7 +3,7 @@ module "run_service_account" {
 
   project_id = var.project_id
   account_id = "${var.name}-sa"
-  roles      = ["iam.serviceAccountUser"]
+  roles      = concat(["iam.serviceAccountUser"], var.service_account_roles)
 }
 
 resource "google_cloud_run_service" "service" {
