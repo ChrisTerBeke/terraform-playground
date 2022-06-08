@@ -8,7 +8,7 @@ variable "account_id" {
   type        = string
 
   validation {
-    condition     = length(var.sa_id) <= 28
+    condition     = length(var.account_id) <= 28
     error_message = "The service account ID must be 28 characters or less."
   }
 }
