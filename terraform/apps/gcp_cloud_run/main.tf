@@ -13,9 +13,9 @@ module "cloud_run" {
     "hello" = "world"
   }
 
-  # revisions = {
-  #   "${var.app_name}-4" = 100
-  # }
+  revisions = {
+    latest = 100
+  }
 
   # TODO: HA with multiple regions
 }
