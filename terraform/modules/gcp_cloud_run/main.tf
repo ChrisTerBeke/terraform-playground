@@ -1,7 +1,7 @@
 module "run_service_account" {
   source = "../gcp_service_account"
 
-  project    = var.project_id
+  project_id = var.project_id
   account_id = "${var.name}-sa"
   roles      = ["iam.serviceAccountUser"]
 }
