@@ -1,3 +1,11 @@
+module "run_service_account" {
+  source = "../gcp_service_account"
+
+  project    = var.project_id
+  account_id = "${var.name}-sa"
+  roles      = ["iam.serviceAccountUser"]
+}
+
 resource "google_cloud_run_service" "service" {
   project  = var.project_id
   name     = var.name
@@ -5,11 +13,14 @@ resource "google_cloud_run_service" "service" {
 
   template {
     spec {
+      service_account_name = module.run_service_account.email
+
       containers {
         image = var.image
 
         dynamic "env" {
           for_each = var.env_vars
+
           content {
             name  = env.key
             value = env.value
@@ -22,8 +33,6 @@ resource "google_cloud_run_service" "service" {
       name = var.revision_name
     }
   }
-
-  # TODO: use separate service account for Cloud Run services
 
   metadata {
     annotations = {
@@ -40,6 +49,7 @@ resource "google_cloud_run_service" "service" {
   }
 }
 
+# TODO: make configurable
 resource "google_cloud_run_service_iam_member" "service_iam_member" {
   project  = var.project_id
   service  = google_cloud_run_service.service.name
