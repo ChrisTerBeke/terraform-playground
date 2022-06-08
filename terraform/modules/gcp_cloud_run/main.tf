@@ -32,17 +32,19 @@ resource "google_cloud_run_service" "service" {
 
     metadata {
       name = var.revision_name
+      annotations = {
+        "autoscaling.knative.dev/minScale"         = var.min_scale
+        "autoscaling.knative.dev/maxScale"         = var.max_scale
+        "run.googleapis.com/execution-environment" = "gen2"
+        # "run.googleapis.com/vpc-access-connector" = ""
+        # "run.googleapis.com/vpc-access-egress"    = "all-traffic"
+      }
     }
   }
 
   metadata {
     annotations = {
-      "autoscaling.knative.dev/minScale"         = var.min_scale
-      "autoscaling.knative.dev/maxScale"         = var.max_scale
-      "run.googleapis.com/ingress"               = var.ingress_annotation
-      "run.googleapis.com/execution-environment" = "gen2"
-      # "run.googleapis.com/vpc-access-connector" = ""
-      # "run.googleapis.com/vpc-access-egress"    = "all-traffic"
+      "run.googleapis.com/ingress" = var.ingress_annotation
     }
   }
 
@@ -50,8 +52,9 @@ resource "google_cloud_run_service" "service" {
     for_each = var.revisions
 
     content {
-      revision_name = traffic.key
-      percent       = traffic.value
+      revision_name   = traffic.key
+      latest_revision = traffic.key == var.revision_name
+      percent         = traffic.value
     }
   }
 }

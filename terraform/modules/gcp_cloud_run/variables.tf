@@ -19,16 +19,13 @@ variable "image" {
   type = string
 }
 
+variable "revisions" {
+  type = map(string)
+}
+
 variable "env_vars" {
   type    = map(string)
   default = {}
-}
-
-variable "revisions" {
-  type = map(string)
-  default = {
-    LATEST = 100
-  }
 }
 
 variable "min_scale" {

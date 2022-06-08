@@ -3,10 +3,14 @@ module "cloud_run" {
 
   project_id         = var.project_id
   name               = var.app_name
-  revision_name      = "${var.app_name}-5"
+  revision_name      = "${var.app_name}-6"
   region             = var.region
   image              = var.image
   ingress_annotation = "internal-and-cloud-load-balancing"
+
+  revisions = {
+    "${var.app_name}-6" = 100
+  }
 
   # TODO: HA with multiple regions
 }
