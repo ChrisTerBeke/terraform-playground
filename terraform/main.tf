@@ -42,22 +42,6 @@ module "network_playground" {
 #   ]
 # }
 
-module "dns_playground" {
-  source = "../modules/gcp_dns"
-
-  project_id = module.project_playground_christerbeke.project_id
-  zone_name  = "cloud-christerbeke-com"
-  domain     = "cloud.christerbeke.com"
-
-  a_records = {
-    placeholder = ["35.201.80.118"]
-  }
-
-  depends_on = [
-    module.project_playground_christerbeke,
-  ]
-}
-
 module "cloud_run_placeholder" {
   source = "./apps/gcp_cloud_run"
 
@@ -69,5 +53,22 @@ module "cloud_run_placeholder" {
 
   depends_on = [
     module.project_playground_christerbeke,
+  ]
+}
+
+module "dns_playground" {
+  source = "../modules/gcp_dns"
+
+  project_id = module.project_playground_christerbeke.project_id
+  zone_name  = "cloud-christerbeke-com"
+  domain     = "cloud.christerbeke.com"
+
+  a_records = {
+    placeholder = [module.cloud_run_placeholder.ip_address]
+  }
+
+  depends_on = [
+    module.project_playground_christerbeke,
+    module.cloud_run_placeholder,
   ]
 }

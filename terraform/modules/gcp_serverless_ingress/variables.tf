@@ -11,11 +11,6 @@ variable "region" {
   type = string
 }
 
-variable "create_static_ip" {
-  type    = bool
-  default = true
-}
-
 variable "cloud_run_service" {
   type = string
 }
