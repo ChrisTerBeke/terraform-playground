@@ -37,7 +37,12 @@ resource "google_cloud_run_service" "service" {
 
   metadata {
     annotations = {
-      "run.googleapis.com/ingress" = var.ingress_annotation
+      "autoscaling.knative.dev/minScale"         = var.min_scale
+      "autoscaling.knative.dev/maxScale"         = var.max_scale
+      "run.googleapis.com/ingress"               = var.ingress_annotation
+      "run.googleapis.com/execution-environment" = "gen2"
+      # "run.googleapis.com/vpc-access-connector" = ""
+      # "run.googleapis.com/vpc-access-egress"    = "all-traffic"
     }
   }
 

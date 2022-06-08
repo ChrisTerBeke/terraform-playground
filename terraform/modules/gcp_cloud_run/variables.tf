@@ -29,6 +29,16 @@ variable "revisions" {
   default = {}
 }
 
+variable "min_scale" {
+  type    = number
+  default = 0
+}
+
+variable "max_scale" {
+  type    = number
+  default = 100
+}
+
 variable "ingress_annotation" {
   type    = string
   default = "all"
