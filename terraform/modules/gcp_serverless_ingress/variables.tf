@@ -7,12 +7,9 @@ variable "name" {
   type = string
 }
 
-variable "region" {
-  type = string
-}
-
-variable "cloud_run_service" {
-  type = string
+variable "cloud_run_services" {
+  type    = map(string)
+  default = {}
 }
 
 variable "domains" {

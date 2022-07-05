@@ -1,28 +1,26 @@
 module "cloud_run" {
-  source = "../../modules/gcp_cloud_run"
+  source   = "../../modules/gcp_cloud_run"
+  for_each = toset(var.regions) // TODO: move for_each into this module?
 
   project_id         = var.project_id
-  name               = var.app_name
+  name               = "${var.app_name}-${each.key}"
   revision_name      = "${var.app_name}-6"
-  region             = var.region
+  region             = each.key
   image              = var.image
   ingress_annotation = "internal-and-cloud-load-balancing"
 
   revisions = {
     "${var.app_name}-6" = 100
   }
-
-  # TODO: HA with multiple regions
 }
 
 module "ingress" {
   source = "../../modules/gcp_serverless_ingress"
 
-  project_id        = var.project_id
-  name              = var.app_name
-  region            = var.region
-  cloud_run_service = module.cloud_run.service_name
-  domains           = var.domains
+  project_id         = var.project_id
+  name               = var.app_name
+  domains            = var.domains
+  cloud_run_services = { for r in var.regions : r => module.cloud_run[r].service_name }
 
   depends_on = [
     module.cloud_run,

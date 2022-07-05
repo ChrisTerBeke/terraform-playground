@@ -1,11 +1,13 @@
 resource "google_compute_region_network_endpoint_group" "neg" {
+  for_each = var.cloud_run_services
+
   project               = var.project_id
-  name                  = "${var.name}-neg"
-  region                = var.region
+  name                  = "${var.name}-${each.key}-neg"
+  region                = each.key
   network_endpoint_type = "SERVERLESS"
 
-  # TODO: make dynamic based on serverless type?
+  // TODO: make dynamic based on serverless type?
   cloud_run {
-    service = var.cloud_run_service
+    service = each.value
   }
 }
