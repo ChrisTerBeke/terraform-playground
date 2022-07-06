@@ -1,11 +1,10 @@
 module "cloud_run" {
-  source   = "../../modules/gcp_cloud_run"
-  for_each = toset(var.regions) // TODO: move for_each into this module?
+  source = "../../modules/gcp_cloud_run"
 
   project_id         = var.project_id
-  name               = "${var.app_name}-${each.key}"
+  name               = var.app_name
   revision_name      = "${var.app_name}-6"
-  region             = each.key
+  regions            = var.regions
   image              = var.image
   ingress_annotation = "internal-and-cloud-load-balancing"
 
@@ -20,7 +19,7 @@ module "ingress" {
   project_id         = var.project_id
   name               = var.app_name
   domains            = var.domains
-  cloud_run_services = { for r in var.regions : r => module.cloud_run[r].service_name }
+  cloud_run_services = module.cloud_run.regions_to_services
 
   depends_on = [
     module.cloud_run,

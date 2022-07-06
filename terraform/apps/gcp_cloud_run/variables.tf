@@ -3,11 +3,6 @@ variable "project_id" {
   type        = string
 }
 
-variable "region" {
-  description = "The GCP region to run the Cloud Run service in."
-  type        = string
-}
-
 variable "regions" {
   description = "The GCP regions to run the Cloud Run service in. Specifying multiple regions results in a highly available setup."
   type        = list(string)
