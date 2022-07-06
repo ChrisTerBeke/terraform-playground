@@ -13,6 +13,11 @@ variable "app_name" {
   type        = string
 }
 
+variable "version_name" {
+  description = "The name of the currently deployed version (revision)."
+  type        = string
+}
+
 variable "image" {
   description = "The registry path to the Docker image to run."
   type        = string
