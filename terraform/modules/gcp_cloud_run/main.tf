@@ -52,7 +52,7 @@ resource "google_cloud_run_service" "service" {
   }
 
   dynamic "traffic" {
-    for_each = var.versions
+    for_each = var.revisions
 
     content {
       revision_name = "${var.name}-${each.key}-${traffic.key}"
