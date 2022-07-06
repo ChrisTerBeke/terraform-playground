@@ -33,7 +33,7 @@ resource "google_cloud_run_service" "service" {
     }
 
     metadata {
-      name = "${var.name}-${each.key}-${var.version}"
+      name = "${var.name}-${each.key}-${var.revision}"
       annotations = {
         "autoscaling.knative.dev/minScale"         = var.min_scale
         "autoscaling.knative.dev/maxScale"         = var.max_scale

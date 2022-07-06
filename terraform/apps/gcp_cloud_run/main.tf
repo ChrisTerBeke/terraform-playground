@@ -3,7 +3,7 @@ module "cloud_run" {
 
   project_id         = var.project_id
   name               = var.app_name
-  version            = "latest"
+  revision           = "latest"
   regions            = var.regions
   image              = var.image
   ingress_annotation = "internal-and-cloud-load-balancing"
