@@ -1,8 +1,13 @@
+moved {
+  from = google_compute_region_network_endpoint_group.neg
+  to   = google_compute_region_network_endpoint_group.neg["europe-west1"]
+}
+
 resource "google_compute_region_network_endpoint_group" "neg" {
   for_each = var.cloud_run_services
 
   project               = var.project_id
-  name                  = "${var.name}-${each.key}-neg"
+  name                  = "${var.name}-neg"
   region                = each.key
   network_endpoint_type = "SERVERLESS"
 
