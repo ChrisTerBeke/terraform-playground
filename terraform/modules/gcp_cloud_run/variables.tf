@@ -7,7 +7,7 @@ variable "name" {
   type = string
 }
 
-variable "revision_name" {
+variable "version" {
   type = string
 }
 
