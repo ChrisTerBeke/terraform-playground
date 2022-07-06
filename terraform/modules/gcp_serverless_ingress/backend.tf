@@ -6,7 +6,11 @@ resource "google_compute_backend_service" "backend" {
   enable_cdn      = false
   security_policy = google_compute_security_policy.waf.id
 
-  backend {
-    group = google_compute_region_network_endpoint_group.neg.id
+  dynamic "backend" {
+    for_each = var.cloud_run_services
+
+    content {
+      group = google_compute_region_network_endpoint_group.neg[backend.key].id
+    }
   }
 }

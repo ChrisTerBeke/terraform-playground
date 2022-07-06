@@ -7,9 +7,11 @@ module "run_service_account" {
 }
 
 resource "google_cloud_run_service" "service" {
+  for_each = toset(var.regions)
+
   project  = var.project_id
-  name     = var.name
-  location = var.region
+  name     = "${var.name}-${each.key}"
+  location = each.key
 
   template {
 
@@ -61,9 +63,11 @@ resource "google_cloud_run_service" "service" {
 
 # TODO: make configurable
 resource "google_cloud_run_service_iam_member" "service_iam_member" {
+  for_each = toset(var.regions)
+
   project  = var.project_id
-  service  = google_cloud_run_service.service.name
-  location = google_cloud_run_service.service.location
+  service  = google_cloud_run_service.service[each.key].name
+  location = google_cloud_run_service.service[each.key].location
   role     = "roles/run.invoker"
   member   = "allUsers"
 

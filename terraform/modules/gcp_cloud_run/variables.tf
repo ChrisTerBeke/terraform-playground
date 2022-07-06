@@ -11,8 +11,8 @@ variable "revision_name" {
   type = string
 }
 
-variable "region" {
-  type = string
+variable "regions" {
+  type = list(string)
 }
 
 variable "image" {

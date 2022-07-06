@@ -4,25 +4,22 @@ module "cloud_run" {
   project_id         = var.project_id
   name               = var.app_name
   revision_name      = "${var.app_name}-6"
-  region             = var.region
+  regions            = var.regions
   image              = var.image
   ingress_annotation = "internal-and-cloud-load-balancing"
 
   revisions = {
     "${var.app_name}-6" = 100
   }
-
-  # TODO: HA with multiple regions
 }
 
 module "ingress" {
   source = "../../modules/gcp_serverless_ingress"
 
-  project_id        = var.project_id
-  name              = var.app_name
-  region            = var.region
-  cloud_run_service = module.cloud_run.service_name
-  domains           = var.domains
+  project_id         = var.project_id
+  name               = var.app_name
+  domains            = var.domains
+  cloud_run_services = module.cloud_run.regions_to_services
 
   depends_on = [
     module.cloud_run,
