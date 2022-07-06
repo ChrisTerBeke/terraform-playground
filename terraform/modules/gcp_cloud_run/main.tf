@@ -1,13 +1,3 @@
-moved {
-  from = google_cloud_run_service.service
-  to   = google_cloud_run_service.service["europe-west1"]
-}
-
-moved {
-  from = google_cloud_run_service_iam_member.service_iam_member
-  to   = google_cloud_run_service_iam_member.service_iam_member["europe-west1"]
-}
-
 module "run_service_account" {
   source = "../gcp_service_account"
 
