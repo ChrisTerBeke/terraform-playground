@@ -10,7 +10,7 @@ resource "google_cloud_run_service" "service" {
   for_each = toset(var.regions)
 
   project  = var.project_id
-  name     = "${var.name}-${each.key}"
+  name     = "${var.name}"
   location = each.key
 
   template {
