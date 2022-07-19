@@ -16,6 +16,7 @@ variable "app_name" {
 variable "version_name" {
   description = "The name of the currently deployed version (revision)."
   type        = string
+  default     = null
 }
 
 variable "image" {

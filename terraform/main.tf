@@ -45,12 +45,11 @@ module "network_playground" {
 module "cloud_run_placeholder" {
   source = "./apps/gcp_cloud_run"
 
-  project_id   = module.project_playground_christerbeke.project_id
-  app_name     = "placeholder"
-  version_name = "latest"
-  regions      = ["europe-west1"]
-  image        = "gcr.io/cloudrun/hello"
-  domains      = ["placeholder.cloud.christerbeke.com"]
+  project_id = module.project_playground_christerbeke.project_id
+  app_name   = "placeholder"
+  regions    = ["europe-west1"]
+  image      = "gcr.io/cloudrun/hello"
+  domains    = ["placeholder.cloud.christerbeke.com"]
 
   depends_on = [
     module.project_playground_christerbeke,
