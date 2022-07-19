@@ -33,7 +33,6 @@ resource "google_cloud_run_service" "service" {
     }
 
     metadata {
-      name = "${var.name}-${each.key}-${var.revision}"
       annotations = {
         "autoscaling.knative.dev/minScale"         = var.min_scale
         "autoscaling.knative.dev/maxScale"         = var.max_scale
@@ -51,14 +50,17 @@ resource "google_cloud_run_service" "service" {
     }
   }
 
-  dynamic "traffic" {
-    for_each = var.revisions
+  autogenerate_revision_name = true
 
-    content {
-      revision_name = "${var.name}-${each.key}-${traffic.key}"
-      percent       = traffic.value
-    }
-  }
+  # TODO: support multiple revisions and traffic splitting
+  # dynamic "traffic" {
+  #   for_each = var.revisions
+
+  #   content {
+  #     revision_name = "${var.name}-${each.key}-${traffic.key}"
+  #     percent       = traffic.value
+  #   }
+  # }
 }
 
 # TODO: make configurable

@@ -7,7 +7,7 @@ variable "name" {
   type = string
 }
 
-variable "revision" {
+variable "version_name" {
   type = string
 }
 
@@ -17,10 +17,6 @@ variable "regions" {
 
 variable "image" {
   type = string
-}
-
-variable "revisions" {
-  type = map(string)
 }
 
 variable "env_vars" {
