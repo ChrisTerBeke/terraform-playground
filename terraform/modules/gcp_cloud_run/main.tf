@@ -52,6 +52,11 @@ resource "google_cloud_run_service" "service" {
 
   autogenerate_revision_name = true
 
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
+
   # TODO: support multiple revisions and traffic splitting
   # dynamic "traffic" {
   #   for_each = var.revisions
