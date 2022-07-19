@@ -49,7 +49,7 @@ module "cloud_run_placeholder" {
   app_name     = "placeholder"
   version_name = "latest"
   regions      = ["europe-west1"]
-  image        = "gcr.io/cloudrun/placeholder"
+  image        = "gcr.io/cloudrun/hello"
   domains      = ["placeholder.cloud.christerbeke.com"]
 
   depends_on = [
